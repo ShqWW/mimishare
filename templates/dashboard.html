@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Editor</title>
+    <style>
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff; /* 按钮背景色 */
+        color: white; /* 字体颜色 */
+        text-align: center;
+        text-decoration: none; /* 去掉下划线 */
+        border-radius: 5px; /* 圆角 */
+        transition: background-color 0.3s; /* 背景色过渡效果 */
+    }
+    
+    .button:hover {
+        background-color: #0056b3; /* 悬停时的背景色 */
+    }
+    </style>
+</head>
+<body>
+    <h1>JSON Editor</h1>
+    <form action="/admin" method="post">
+        <label for="filesize">File Size:</label>
+        <input type="number" id="filesize" name="filesize" value="{{ json_data.get('filesize', '') }}">
+        <br>
+        <label for="password">Admin Password:</label>
+        <input type="text" id="password" name="password" value="{{ json_data.get('password', '') }}">
+        <br>
+        <input type="submit" value="Update JSON">
+    </form>
+    <br>
+    <button>
+        <a href="/logout" class="button">waiguan</a>
+    </button>
+</body>
+</html>
