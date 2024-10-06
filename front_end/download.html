@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件分享</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/textlink.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .input-container {
+            display: flex;
+            width: 80%;
+            /* 调整容器宽度 */
+            margin: 0 auto;
+            /* 居中容器 */
+            margin-bottom: 20px;
+        }
+
+        #pickupCode {
+            flex: 2;
+            /* 输入框占2份 */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            height: 80%;
+            margin-top: 1.6%;
+            width: 60%;
+            /* 调整宽度为60% */
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+        }
+
+        button {
+            flex: 1;
+            /* 按钮占1份 */
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px;
+            width: 30%;
+            /* 调整按钮宽度为30% */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .upload-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ccc;
+            border-radius: 20%;
+            /* 设置圆角边框 */
+            width: 40px;
+            /* 调整宽度以适应圆角 */
+            height: 40px;
+            /* 调整高度以适应圆角 */
+            cursor: pointer;
+            position: relative;
+        }
+
+        .upload-button svg {
+            display: block;
+        }
+
+        .upload-button:hover {
+            background: linear-gradient(45deg, #5b2f8d, #4a90e2);
+            /* 悬停时的蓝紫渐变效果 */
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div class="frosted-box">
+        <h2>MIMI的文件分享</h2>
+
+        <div class="input-container">
+            <input type="text" id="pickupCode" placeholder="请输入取件码" required>
+            <button onclick="downloadFile()">下载文件</button>
+        </div>
+        <!-- 上传按钮 -->
+        <a href="/upload" class="text-link" title="上传文件">上传文件？点击这里</a>
+    </div>
+
+    <!-- 引入外部 JavaScript 文件 -->
+    <script src="js/background.js"></script>
+    <script src="js/download.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+.text-link {
+    color: white; /* 设置文字颜色为紫色 */
+    text-decoration: none; /* 去掉下划线 */
+    font-size: 12px; /* 设置字体大小 */
+    display: inline-block; /* 使链接显示为块级元素 */
+    padding: 10px 20px; /* 设置内边距，使链接看起来更像按钮 */
+    transition: background-color 0.3s ease; /* 添加悬停效果平滑过渡 */
+}
+
+.text-link:hover {
+    color: #007bff /* 设置文字颜色为紫色 */
+}

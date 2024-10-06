@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件分享</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/textlink.css">
+    <link rel="stylesheet" href="css/filename.css">
+    <style>
+        /* 设置下拉框的样式 */
+        select {
+            background-color: rgba(0, 0, 0, 0.3);
+            /* 设置下拉框背景为黑色 */
+            color: white;
+            /* 设置文字为白色 */
+            border: 1px solid white;
+            /* 可选: 添加白色边框 */
+            padding: 5px;
+            /* 可选: 添加内边距 */
+            font-size: 16px;
+            /* 可选: 设置字体大小 */
+            border-radius: 4px;
+            /* 可选: 圆角 */
+        }
+
+        /* 设置下拉菜单选项的样式 */
+        select option {
+            background-color: black;
+            /* 设置选项背景为黑色 */
+            color: white;
+            /* 设置选项文字为白色 */
+        }
+
+        /* 设置标签的样式 */
+        label {
+            color: white;
+            /* 设置标签文字为白色 */
+            font-size: 16px;
+            /* 可选: 设置字体大小 */
+            margin-right: 10px;
+            /* 可选: 标签和下拉框之间的间距 */
+        }
+
+        /* 使用 flex 布局使标签和下拉框水平排列 */
+        .select-container {
+            display: flex;
+            align-items: center;
+            /* 垂直居中对齐 */
+            margin-left: 20%;
+        }
+    </style>
+    <script>
+        const sizeLimitMB = {{ filesize_limit }};
+        const chunksize = {{ chunksize_limit }};         
+    </script>
+</head>
+
+<body>
+    <div class="frosted-box">
+        <h2>MIMI的文件分享</h2>
+        <p id="fileInfo", class="file-name">文件分享(先选好过期时间再上传文件)</p>
+        <div class="select-container">
+            <label for="expiration">文件过期时间:</label>
+            <select id="expiration" name="expiration">
+                <option value="60">一分钟</option>
+                <option value="3600">一小时</option>
+                <option value="86400" selected>一天</option>
+                <option value="2592000">一个月</option>
+                <option value="0">永久</option>
+            </select>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+        <div class="file-uploader" id="fileUploader">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 32 32">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#007bff" />
+                        <stop offset="100%" stop-color="#9b59b6" />
+                    </linearGradient>
+                </defs>
+                <path fill="none" stroke="url(#gradient)" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" d="M9 22c-9 1-8-10 0-9C6 2 23 2 22 10c10-3 10 13 1 12m-12-4l5-4l5 4m-5-4v15" />
+            </svg>
+            <p class="gradient-text">拖放文件到这里或点击浏览</p>
+            <p class="gradient-text" style="font-size: 0.8em;">文件大小限制: {{filesize_limit}} MB</p>
+            <input type="file" id="fileInput" />
+        </div>
+
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="result" id="rr">
+            <div class="container">
+                <div class="left-section">
+                    <canvas id="qrCanvas" width="100" height="100"></canvas> <!-- 设置画布大小 -->
+                </div>
+                <div class="right-section">
+                    <button id="pickupCodeButton">取件码</button>
+                    <a id="pickupLink" href="/" download>
+                        <button id="copyLinkButton">复制取件链接</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <a href="/" class="text-link" title="下载文件">下载文件？点击这里</a>
+
+        <script src="js/background.js"></script>
+        <script src="js/upload.js"></script>
+
+
+</body>
+
+</html>
