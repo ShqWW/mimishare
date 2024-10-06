@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>库存文件管理</title>
-    <link rel="stylesheet" href="/css/navbar.css">
-    <link rel="stylesheet" href="/css/file_manage.css">
-
+    <title>文件分享</title>
+    <link rel="stylesheet" href="/css/styles.css">
     <style>
-
-
-        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
 
         .input-container {
             display: flex;
@@ -72,28 +71,45 @@
     </style>
 </head>
 <body>
-<div class="navbar">
-        <ul>
-            <li><a href="admin">后台设置</a></li>
-            <li><a href="download">文件管理</a></li>
-        </ul>
-    </div>
-<h1>库存文件管理</h1>
-<ul id="files-list">
-    {% for code, file in files_with_codes.items() %}
-    <li class="frosted-box">
-        <span class="file-name">{{ file }}</span>
-        <span class="file-name">取件码: {{ code }}</span>
-        <div class="button-container">
-            <button class="delete-button" onclick="confirmDelete('{{ code }}')">删除</button>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
+
+<div class="frosted-box">
+    <h2>MIMI的文件分享</h2>
+
+
+
+<div class="input-container">
+    <input type="text" id="pickupCode" placeholder="请输入取件码" required>
+    <button onclick="downloadFile()">下载文件</button>
+</div>
+    <!-- 上传按钮 -->
+    <a href="/upload" class="upload-button" title="上传文件">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
+            <path fill="white" d="M11 16V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16zm-7 4v-5h2v3h12v-3h2v5z" />
+        </svg>
+    </a>
+</div>
+
 <script>
+    document.getElementById('pickupCode').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // 防止回车键触发默认行为（例如表单提交）
+            document.querySelector('.input-container button').click(); // 触发下载文件按钮的点击事件
+        }
+    });
+    
+    function downloadFile() {
+        const pickupCode = document.getElementById('pickupCode').value;
+        if (pickupCode) {
+            // 替换为您的后台API URL
+            window.location.href = `/download/${pickupCode}`;
+        } else {
+            alert('请填写取件码');
+        }
+    }
+
     async function setBackground() {
         try {
-            const response = await fetch('/background');
+            const response = await fetch('http://127.0.0.1:8000/background');
             const data = await response.json();
             document.body.style.backgroundImage = `url('${data.url}')`;
         } catch (error) {
@@ -102,29 +118,6 @@
     }
     
     setBackground();
-    function confirmDelete(code) {
-        if (confirm('确定要删除这个文件吗？')) {
-            // 使用 fetch 发送删除请求
-            fetch(`/delete/${code}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => {
-                if (response.ok) {
-                    // 删除成功后更新页面
-                    location.reload();
-                } else {
-                    alert('删除失败，请重试。');
-                }
-            })
-            .catch(error => {
-                console.error('删除请求出错:', error);
-                alert('删除请求出错，请重试。');
-            });
-        }
-    }
 </script>
 
 </body>

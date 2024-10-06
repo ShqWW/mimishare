@@ -22,10 +22,8 @@ app.mount("/css", StaticFiles(directory="css"), name="static")
 # 模板目录
 templates = Jinja2Templates(directory="templates")
 UPLOAD_DIRECTORY = "data"
-tmp_path = 'tmp'
-
-os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
-os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
+if not os.path.exists(UPLOAD_DIRECTORY):
+    os.makedirs(UPLOAD_DIRECTORY)
 
 @app.get("/background")
 def get_background():
@@ -35,7 +33,7 @@ def get_background():
 @app.get("/upload", response_class=HTMLResponse)
 async def index(request: Request):
     aaa = get_json()
-    return templates.TemplateResponse("upload.html", {"request": request, "sizeLimitMB": aaa['filesize'], "chunksize": aaa['chunksize']})
+    return templates.TemplateResponse("upload.html", {"request": request, "sizeLimitMB": aaa['filesize']})
 
 @app.post("/uploadfile/")
 async def upload_file(file: UploadFile = File(...), expiration: int = Form(...)):
@@ -53,51 +51,6 @@ async def upload_file(file: UploadFile = File(...), expiration: int = Form(...))
         await jsonfile.write(json.dumps(data))
     
     return JSONResponse(content={"info": f"文件 '{file.filename}' 上传成功，存储在 '{file_location}'。", "code": code})
-
-
-
-@app.post("/getcode/")
-async def get_code_fetch(request: Request):
-    # 解析请求体中的 JSON 数据
-    request_data = await request.json()
-    # 获取传入的字符串变量
-    filename = request_data.get("filename", "unknown")
-    code = generate_unique_code()
-    data = get_code()
-    # 使用传入的字符串变量
-    data[code] = filename
-    async with aio_open('data_info/datainfo.json', mode='w') as jsonfile:
-        await jsonfile.write(json.dumps(data))
-    return JSONResponse(content={"code": code}) 
-    
-@app.post("/uploadchunk/")
-async def upload_chunk(file: UploadFile = File(...), code: str = Form(...), index: int = Form(...), total_chunks: int = Form(...)):
-    chunk_path = os.path.join(tmp_path, code)
-    os.makedirs(chunk_path, exist_ok=True)
-    chunk_file = os.path.join(chunk_path, str(index).zfill(5))
-    with open(chunk_file, "wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-    return JSONResponse(content={"info": f"文件上传成功"})
-
-
-@app.post("/mergechunk/")
-async def merge_chunk(request: Request):
-    request_data = await request.json()
-    code = request_data.get("code", "1234")
-    expiration = request_data.get("expiration", 8640)
-    print(expiration) 
-    data = get_code()
-    file_name = data[code]
-    chunk_path = os.path.join(tmp_path, code)
-    files = os.listdir(chunk_path)
-    files_to_merge = [os.path.join(chunk_path, file) for file in files]
-    output_file = os.path.join(UPLOAD_DIRECTORY, file_name)
-    with open(output_file, 'wb') as outfile:
-        for filename in files_to_merge:
-            with open(filename, 'rb') as infile:
-                shutil.copyfileobj(infile, outfile)
-    shutil.rmtree(chunk_path)
-    return JSONResponse(content={"info": f"文件上合并成功"})
 
 
 
@@ -213,8 +166,8 @@ async def read_json(request: Request):
     return templates.TemplateResponse("dashboard.html", {"request": request, "json_data": json_data})
 
 @app.post("/admin")
-async def update_json(filesize: int = Form(...), chunksize: int = Form(...), password: str = Form(...)):
-    data = {"filesize": filesize, "chunksize": chunksize, "password": password}
+async def update_json(filesize: int = Form(...), password: str = Form(...)):
+    data = {"filesize": filesize, "password": password}
     async with aio_open(json_file_path, mode='w') as file:
         await file.write(json.dumps(data))
     return {"message": "JSON file updated successfully"}
@@ -259,5 +212,5 @@ def generate_unique_code():
 # 运行应用
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
     

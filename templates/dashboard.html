@@ -4,37 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Editor</title>
+    <link rel="stylesheet" href="/css/navbar.css">
     <style>
-    .button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007bff; /* 按钮背景色 */
-        color: white; /* 字体颜色 */
-        text-align: center;
-        text-decoration: none; /* 去掉下划线 */
-        border-radius: 5px; /* 圆角 */
-        transition: background-color 0.3s; /* 背景色过渡效果 */
-    }
-    
-    .button:hover {
-        background-color: #0056b3; /* 悬停时的背景色 */
-    }
+        body {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column; /* 使用列方向，使导航和内容在纵向排列 */
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .frosted-box {
+            width: 80%;
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 15px;
+            padding: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            text-align: center;
+            margin: auto; /* 使 frosted-box 水平居中 */
+            display: flex;
+            flex-direction: column; /* 使内部元素纵向排列 */
+            justify-content: center; /* 使内容在盒子内垂直居中 */
+            align-items: center; /* 使内容在盒子内水平居中 */
+        }
+
+        .frosted-box-form {
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 100%; /* 设置容器的宽度为100% */
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .frosted-box-form label {
+            margin-bottom: 5px;
+            text-align: right;
+            width: 150px;
+        }
+
+        .frosted-box-form input[type="number"],
+        .frosted-box-form input[type="text"] {
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 200px;
+            margin-left: 5%;
+            margin-top: -1%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .button {
+            background: linear-gradient(to right, #007bff, #9b59b6);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+            width: 120px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .buttonlogout {
+            background: rgb(127, 2, 2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 10px;
+            width: 60px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background: linear-gradient(to right, #0056b3, #6c358f);
+        }
     </style>
 </head>
 <body>
-    <h1>JSON Editor</h1>
-    <form action="/admin" method="post">
-        <label for="filesize">File Size:</label>
-        <input type="number" id="filesize" name="filesize" value="{{ json_data.get('filesize', '') }}">
-        <br>
-        <label for="password">Admin Password:</label>
-        <input type="text" id="password" name="password" value="{{ json_data.get('password', '') }}">
-        <br>
-        <input type="submit" value="Update JSON">
-    </form>
-    <br>
-    <button>
-        <a href="/logout" class="button">waiguan</a>
-    </button>
+    <div class="navbar">
+        <ul>
+            <li><a href="admin">后台设置</a></li>
+            <li><a href="download">文件管理</a></li>
+        </ul>
+    </div>
+
+    <div class="frosted-box frosted-box-form">
+        <h2>后台设置</h2>
+        <form id="settingsForm">
+            <div class="form-row">
+                <label for="filesize" class="white-label">文件大小限制 (MB):</label>
+                <input type="number" id="filesize" name="filesize" value="{{ json_data.get('filesize', '') }}" class="form-input">
+            </div>
+            <div class="form-row">
+                <label for="chunksize" class="white-label">分块大小 (MB):</label>
+                <input type="number" id="chunksize" name="chunksize" value="{{ json_data.get('chunksize', '') }}" class="form-input">
+            </div>
+            <div class="form-row">
+                <label for="password" class="white-label">后台管理密码:</label>
+                <input type="text" id="password" name="password" value="{{ json_data.get('password', '') }}" class="form-input">
+            </div>
+            <div class="button-container">
+                <a href="/logout" class="buttonlogout">退出</a>
+                <button type="submit" class="button">更新设置</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        async function setBackground() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/background');
+                const data = await response.json();
+                document.body.style.backgroundImage = `url('${data.url}')`;
+            } catch (error) {
+                console.error('Error fetching background image:', error);
+            }
+        }
+
+        document.getElementById('settingsForm').addEventListener('submit', async (event) => {
+            event.preventDefault(); // 阻止表单的默认提交行为
+
+            const formData = new FormData(event.target);
+
+            try {
+                const response = await fetch('/admin', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                // 确保服务器的响应是成功的
+                if (response.ok) {
+                    alert("设置更新成功！"); // 可以自定义提示消息
+                    location.reload(); // 刷新当前页面
+                } else {
+                    alert("设置更新失败，请重试。"); // 处理错误情况
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert("请求失败，请重试。");
+            }
+        });
+
+        setBackground();
+    </script>
 </body>
 </html>

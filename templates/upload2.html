@@ -99,7 +99,6 @@
             // 获取 select 元素
             const selectElement = document.getElementById('expiration');
             const sizeLimitMB = {{ sizeLimitMB }};
-            const chunksize = {{ chunksize }};
             let result;            
 
             // 设置背景
@@ -117,7 +116,7 @@
                     fileInput.files = e.dataTransfer.files; // 更新文件输入控件的文件
                     console.log('拖放文件上传:', file.name);
                     if (file.size <= sizeLimitMB * 1024 * 1024) { // 20MB
-                        autoUpload(file, chunksize*1024*1024); // 自动上传文件
+                        autoUpload(file); // 自动上传文件
                     } else {
                         alert(`文件大小超过${sizeLimitMB}MB，请选择较小的文件。`);
                     }
@@ -129,7 +128,7 @@
                 const file = fileInput.files[0];
                 if (file) {
                     if (file.size <= sizeLimitMB * 1024 * 1024) { // 20MB
-                        autoUpload(file, chunksize*1024*1024); // 自动上传文件
+                        autoUpload(file); // 自动上传文件
                     } else {
                         alert(`文件大小超过${sizeLimitMB}MB，请选择较小的文件。`);
                     }
@@ -167,99 +166,54 @@
                 }
             }
 
-            async function autoUpload(file, chunk_size=30*1024*1024) {
+            function autoUpload(file) {
                 // 显示进度条
-                alert(chunk_size)
                 progressContainer.style.display = 'block';
                 progressBar.style.width = '0%';
-                let start = 0;
-                let i =0;
-                let code;
-                const totalChunks = Math.ceil(file.size / chunk_size);
-                const response = await fetch('/getcode/', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ filename: file.name })
+
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("expiration", selectElement.value);
+
+                const xhr = new XMLHttpRequest();
+
+                // 进度监听
+                xhr.upload.addEventListener('progress', function (event) {
+                    if (event.lengthComputable) {
+                        const percentComplete = (event.loaded / event.total) * 100;
+                        progressBar.style.width = percentComplete + '%'; // 更新进度条
+                    }
                 });
 
-                // 检查响应是否成功
-                if (!response.ok) {
-                    alert('请求失败: ' + response.statusText);
-                    throw new Error('网络响应失败');
-                }
+                // 响应处理
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            progressBar.style.width = '100%'
+                            result = JSON.parse(xhr.responseText);
+                            document.getElementById('fileInfo').textContent = '已上传文件名：' + file.name;
+                            document.querySelector('.right-section').style.display = 'flex';
+                            document.querySelector('.left-section').style.display = 'flex';
+                            pickupCodeButton.innerText = '取件码: ' + result.code;
+                            pickupLinkElement.href = 'download/' + result.code; // 更新为新的取件链接
 
-                // 解析响应的 JSON 数据
-                const data = await response.json();
-                code = data.code;
-                // alert(code);
+                            // 生成二维码
+                            var qr = new QRious({
+                                element: document.getElementById('qrCanvas'),
+                                value: pickupLinkElement.href, // 在这里放入取件码
+                                foreground: 'white', // 设置前景颜色为白色
+                                background: 'transparent'
+                            });
+                        } else {
+                            result = JSON.parse(xhr.responseText);
+                            alert("文件上传失败: " + result.info);
+                        }
+                    }
+                };
 
-                async function upload_chunk(chunk, i) {
-                    return new Promise((resolve, reject) => {
-                        const formData = new FormData();
-                        formData.append("file", chunk);
-                        formData.append("code", code);
-                        formData.append("index", i);
-                        formData.append("total_chunks", totalChunks);
-                        const xhr = new XMLHttpRequest();
-
-                        // 进度监听
-                        xhr.upload.addEventListener('progress', function (event) {
-                            if (event.lengthComputable) {
-                                const percentComplete = (event.loaded / event.total) * (100 / totalChunks); // 计算整体进度
-                                progressBar.style.width = `${percentComplete + (i * (100 / totalChunks))}%`; // 更新进度条
-                            }
-                        });
-
-                        // 响应处理
-                        xhr.onreadystatechange = function () {
-                            if (xhr.readyState === XMLHttpRequest.DONE) {
-                                if (xhr.status === 200) {
-                                    resolve(); // 成功上传，解决 Promise
-                                } else {
-                                    const result = JSON.parse(xhr.responseText);
-                                    alert("文件上传失败: " + result.info);
-                                    reject(new Error("Upload failed")); // 失败时拒绝 Promise
-                                }
-                            }
-                        };
-
-                        // 发送请求
-                        xhr.open("POST", "/uploadchunk/");
-                        xhr.send(formData);
-                    });
-                }
-
-                for (let i = 0; i < totalChunks; i++) {
-                    const chunk = file.slice(start, Math.min(start+chunk_size, file.size)); // 获取当前块
-                    await upload_chunk(chunk, i);
-                    start = start + chunk_size;
-                }                
-
-                const response2 = await fetch('/mergechunk/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ code:code, expiration: selectElement.value}) // 将 code 作为请求体发送
-                });
-
-                if (!response2.ok) {
-                    throw new Error('网络响应不符合预期');
-                }
-                else{
-                    document.getElementById('fileInfo').textContent = '已上传文件名：' + file.name;
-                    document.querySelector('.right-section').style.display = 'flex';
-                    document.querySelector('.left-section').style.display = 'flex';
-                    pickupCodeButton.innerText = '取件码: ' + code;
-                    pickupLinkElement.href = 'download/' + code; // 更新为新的取件链接
-                    // 生成二维码
-                    var qr = new QRious({
-                        element: document.getElementById('qrCanvas'),
-                        value: "12345", // 在这里放入取件码
-                        foreground: 'white', // 设置前景颜色为白色
-                        background: 'transparent'
-                    });
-                }
+                // 发送请求
+                xhr.open("POST", "/uploadfile/");
+                xhr.send(formData);
             }
         </script>
 </body>

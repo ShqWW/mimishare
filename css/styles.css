@@ -1,0 +1,146 @@
+body {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.frosted-box {
+    width: 80%;
+    max-width: 400px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    text-align: center;
+}
+
+h2 {
+    color: #fff;
+}
+
+p {
+    color: #fff;
+    font-size: 18px;
+}
+
+.file-uploader p {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+}
+
+.file-uploader {
+    width: 80%;
+    height: 100px;
+    border: 1.5px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    margin: 10px auto;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.file-uploader:hover {
+    border: 1.5px solid #9b59b6;
+    background: linear-gradient(45deg, rgba(91, 47, 141, 0.5), rgba(74, 144, 226, 0.5)); /* 悬停时的蓝紫渐变效果，略透明 */
+}
+
+.file-uploader input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+button {
+    background: linear-gradient(to right, #007bff, #9b59b6);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px 0;
+    width: 120px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.progress-container {
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin: 10px auto;
+}
+
+.progress-bar {
+    height: 5px;
+    width: 0%;
+    background: linear-gradient(to right, #007bff, #9b59b6);
+    border-radius: 5px;
+    transition: width 0.3s;
+}
+
+.gradient-text {
+    background: linear-gradient(to right, #007bff, #9b59b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 18px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.left-section {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    margin-right: auto;
+}
+
+.right-section {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+}
+
+#qrCanvas {
+    width: 100%;
+    height: auto;
+}
+
+.message-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#qrCanvas {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: transparent;
+}

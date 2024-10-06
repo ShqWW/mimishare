@@ -1,0 +1,31 @@
+.navbar {
+    display: flex;
+    justify-content: flex-start; /* 使导航项靠左对齐 */
+    background-color: rgba(0, 0, 0, 0.5); /* 设置导航背景颜色 */
+    padding: 8px 10px; /* 减小内边距 */
+    color: black; /* 设置文本颜色为白色 */
+    backdrop-filter: blur(20px);
+    line-height: 1.2; /* 调整行高 */
+    font-size: 18px; /* 减小字体大小 */
+}
+
+.navbar ul {
+    display: flex; /* 使导航项并排显示 */
+    list-style: none; /* 去掉默认的列表样式 */
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin-right: 20px; /* 为导航项之间增加一些间距 */
+}
+
+.navbar ul li a {
+    color: white; /* 设置链接文本颜色为白色 */
+    text-decoration: none; /* 去掉下划线 */
+    transition: color 0.3s; /* 添加颜色过渡效果 */
+}
+
+.navbar ul li a:hover {
+    color: #007bff; /* 鼠标悬停时改变文本颜色 */
+}
