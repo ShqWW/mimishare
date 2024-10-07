@@ -14,7 +14,7 @@ def login(request: Request, password: str = Form(...)):
     json_file = get_config_json()
     password_true = json_file["password"]
     if password != password_true:
-        return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid credentials"})
+        return templates.TemplateResponse("login.html", {"request": request, "error": "Password Error!"})
     response = RedirectResponse(url="/admin", status_code=303)
     response.set_cookie(key="access_token", value="admin")  # 设置 Cookie
     # print("Cookie set: access_token=admin")  # 调试信息

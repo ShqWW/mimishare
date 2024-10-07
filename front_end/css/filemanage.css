@@ -1,0 +1,173 @@
+.file-drawer {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+#files-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.frosted-box {
+    width: 100%;
+    max-width: 300px;
+    min-width: 280px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+
+
+.frosted-box>*:not(:last-child) {
+    margin-bottom: 5px;
+    /* 减少子元素之间的间距 */
+}
+
+
+
+
+
+
+.drawer-header {
+    cursor: pointer;
+    color: blue;
+    /* 可以根据需要调整 */
+    text-decoration: underline;
+    /* 可以根据需要调整 */
+}
+
+.drawer-content {
+    display: none;
+    background: rgba(0, 0, 0, 0.3);
+    /* 半透明背景 */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* 阴影效果 */
+    backdrop-filter: blur(5px);
+    /* 毛玻璃效果 */
+    margin-top: 5px;
+}
+
+.drawer-content.active {
+    display: block;
+    /* 当抽屉激活时显示 */
+}
+
+
+
+
+.delete-button {
+    background: rgb(145, 4, 4);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    /* 设置固定宽度和高度以确保一致性 */
+    width: 80px;
+    /* 设置按钮固定宽度 */
+    height: 40px;
+    /* 设置按钮固定高度 */
+    font-size: 14px;
+}
+
+.delete-button:hover {
+    background: #701903;
+}
+
+
+.download-button {
+    background: rgb(2, 183, 77);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    /* 设置固定宽度和高度以确保一致性 */
+    width: 80px;
+    /* 设置按钮固定宽度 */
+    height: 40px;
+    /* 设置按钮固定高度 */
+    font-size: 14px; 
+}
+
+.download-button:hover {
+    background: #027918;
+}
+
+.common-button {
+    background: linear-gradient(to right, #007bff, #9b59b6);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    /* 设置固定宽度和高度以确保一致性 */
+    width: 80px;
+    /* 设置按钮固定宽度 */
+    height: 40px;
+    /* 设置按钮固定高度 */
+    font-size: 14px; 
+}
+
+.common-button:hover {
+    background: linear-gradient(to left, #007bff, #9b59b6);
+    transform: scale(1.05);
+}
+
+
+
+.qr-container {
+    left: 10%;
+    bottom: 10%;
+}
+
+
+.download-button,
+.delete-button, 
+.common-button {
+    margin-top: 10px;
+    margin-left: 10px;
+    /* 按钮之间的间隔 */
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap; /* 自动换行 */
+    background-color: rgba(255, 255, 255, 0); /* 透明背景 */
+    border-radius: 10px; /* 圆角 */
+    margin-left:9%;
+    margin-top: 3%;
+}
+
+.container-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin:2px;
+    margin-left:-15%
+}
+
+.left-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -3%;
+}
+
+.column-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

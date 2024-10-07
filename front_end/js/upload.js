@@ -60,15 +60,6 @@ pickupCodeButton.addEventListener('click', (e) => {
     });
 });
 
-pickupCodeButton.addEventListener('click', (e) => {
-    e.preventDefault(); // 阻止默认行为
-    const code = result.code;
-    navigator.clipboard.writeText(code).then(() => {
-        alert('取件码已复制到剪切板: ' + code);
-    }).catch(err => {
-        alert('无法复制到剪切板: ' + err);
-    });
-});
 async function autoUpload(file, chunk_size = 30 * 1024 * 1024) {
     // 显示进度条
     progressContainer.style.display = 'block';
@@ -78,7 +69,7 @@ async function autoUpload(file, chunk_size = 30 * 1024 * 1024) {
     const response = await fetch('/generatecode/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename: file.name })
+        body: JSON.stringify({ filename: file.name, expiration: selectElement.value})
     });
 
     // 检查响应是否成功
@@ -139,7 +130,7 @@ async function autoUpload(file, chunk_size = 30 * 1024 * 1024) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ code: code, expiration: selectElement.value }) // 将 code 作为请求体发送
+        body: JSON.stringify({ code: code}) // 将 code 作为请求体发送
     });
 
     if (!response2.ok) {

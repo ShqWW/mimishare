@@ -19,7 +19,7 @@ async def download_file(code: str):
     if code not in data_dict:
         raise HTTPException(status_code=404, detail="取件码错误")
     # 获取文件名
-    file_name = data_dict[code]
+    file_name = data_dict[code][0]
     # 构建文件路径
     file_path = os.path.join(UPLOADPATH, code, file_name)
     # 检查文件是否存在

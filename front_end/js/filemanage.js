@@ -19,3 +19,41 @@ function confirmDelete(code) {
             alert('删除请求出错，请重试。');
         });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取所有canvas元素
+    const qrCanvases = document.querySelectorAll('.qrCanvas');
+
+    // 遍历每个canvas，生成QR码
+    qrCanvases.forEach(canvas => {
+        const qr = new QRious({
+            element: canvas,
+            value: canvas.getAttribute('data-code'), // 取件码
+            foreground: 'white', // 设置前景颜色为白色
+            background: 'transparent'
+        });
+    });
+});
+
+
+function copyCode(code) {
+    const tempInput = document.createElement('input');
+    tempInput.value = code;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    alert('下载链接已复制到剪贴板：' + code);
+}
+
+function copyLink(event, button) {
+    event.preventDefault(); // 阻止默认的下载行为
+    const link = button.parentElement.href;
+
+    // 复制链接的逻辑
+    navigator.clipboard.writeText(link).then(() => {
+        alert('链接已复制！');
+    }).catch(err => {
+        console.error('复制失败!', err);
+    });
+}

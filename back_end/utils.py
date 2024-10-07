@@ -3,6 +3,7 @@ import json
 import random
 from fastapi import HTTPException
 from .variable import *
+from datetime import datetime, timedelta
 
 def get_config_json():
     json_file_path = 'config/config.json'
@@ -29,3 +30,16 @@ def generate_unique_code():
         new_code = f"{random.randint(0, 9999):04d}"
         if new_code not in existing_codes:
             return new_code
+
+
+def calculate_expiration_time(expiration):
+    # 获取当前时间
+    now = datetime.now()
+    
+    # 计算过期时间
+    expiration_time = now + timedelta(seconds=expiration)
+    
+    # 格式化过期时间为字符串
+    expiration_str = expiration_time.strftime("%Y-%m-%d %H:%M:%S")
+    
+    return expiration_str

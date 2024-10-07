@@ -1,28 +1,6 @@
-body {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    /* background: linear-gradient(to right, #007bff, #9b59b6); */
-    background: url(/wallpaper/a.jpg) no-repeat center top;
-    background-size: cover; /* 使背景图片铺满整个画面 */
-    font-family: Arial, sans-serif;
-}
-
 .frosted-box {
     width: 80%;
     max-width: 400px;
-    background: rgba(0, 0, 0, 0.25);
-    border-radius: 15px;
-    padding: 10px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    text-align: center;
 }
 
 h2 {
@@ -83,7 +61,8 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(to left, #007bff, #9b59b6);
+    transform: scale(1.05);
 }
 
 .progress-container {

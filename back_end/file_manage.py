@@ -15,12 +15,12 @@ async def list_files(request: Request):
         user = get_current_user(token)  # 验证令牌
     except HTTPException:
         return RedirectResponse(url="/login", status_code=303)
-    file_codes = get_data_json()
+    data_dict = get_data_json()
     files = os.listdir(UPLOADPATH)
     # # 过滤出存在的文件
     # files_with_codes = {code: file for code, file in file_codes.items() if file in files}
 
-    return templates.TemplateResponse("filemanage.html", {"request": request, "files_with_codes": file_codes})
+    return templates.TemplateResponse("filemanage.html", {"request": request, "files_with_codes": data_dict})
 
 
 async def delete_files(code: str):

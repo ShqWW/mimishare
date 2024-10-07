@@ -1,97 +1,65 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>库存文件管理</title>
+    <link rel="stylesheet" href="/css/body.css">
     <link rel="stylesheet" href="/css/navbar.css">
-    <link rel="stylesheet" href="/css/file_manage.css">
+    <link rel="stylesheet" href="/css/filemanage.css">
+    <link rel="stylesheet" href="/css/filename.css">
 
     <style>
-        
-
-        
-
-        .input-container {
-            display: flex;
-            width: 80%; /* 调整容器宽度 */
-            margin: 0 auto; /* 居中容器 */
-            margin-bottom: 20px;
+        body {
+            justify-content: flex-start;
+            margin-top: 30px;
         }
-
-        #pickupCode {
-            flex: 2; /* 输入框占2份 */
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            font-size: 16px;
-            height: 80%;
-            margin-top: 1.6%;
-            width: 60%; /* 调整宽度为60% */
-            background-color: rgba(0, 0, 0, 0.3);
-            color:white;
-        }
-
-        button {
-            flex: 1; /* 按钮占1份 */
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            margin-left: 10px;
-            width: 30%; /* 调整按钮宽度为30% */
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .upload-button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border: 2px solid #ccc;
-        border-radius: 20%; /* 设置圆角边框 */
-        width: 40px; /* 调整宽度以适应圆角 */
-        height: 40px; /* 调整高度以适应圆角 */
-        cursor: pointer;
-        position: relative;
-    }
-
-    .upload-button svg {
-        display: block;
-    }
-
-    .upload-button:hover {
-    background: linear-gradient(45deg, #5b2f8d, #4a90e2); /* 悬停时的蓝紫渐变效果 */
-}
     </style>
 </head>
+
 <body>
-<div class="navbar">
-        <ul>
-            <li><a href="admin">后台设置</a></li>
-            <li><a href="filemanage">文件管理</a></li>
-        </ul>
+    <div class="nav-container">
+        <a href="admin">后台设置</a>
+        <a href="servershare">云端分享</a>
+        <a href="filemanage" style="background: linear-gradient(to right, #007bff, #9b59b6);">文件管理</a>
     </div>
-<h1>库存文件管理</h1>
-<ul id="files-list">
-    {% for code, file in files_with_codes.items() %}
-    <li class="frosted-box">
-        <span class="file-name">{{ file }}</span>
-        <span class="file-name">取件码: {{ code }}</span>
-        <div class="button-container">
-            <button class="delete-button" onclick="confirmDelete('{{ code }}')">删除</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <div class="cards-container">
+        <!-- <ul id="files-list"> -->
+        {% for code, file_info in files_with_codes.items() %}
+            {% with file_name=file_info.0, expiration=file_info.1 %}
+        <div class="frosted-box">
+            <span class="file-name">{{ file_name }}</span>
+            <span>过期时间:{{ expiration }}</span>
+            <!-- <span class="file-name">取件码: {{ code }}</span> -->
+            <div class="container-row">
+                <div class="left-section">
+                    <canvas class="qrCanvas" data-code="{{ code }}" width="100" height="100"></canvas>
+                </div>
+                <div class="column-section">
+                    <button class="common-button" onclick="copyCode('{{ code }}')">{{ code }}</button>
+                    <a href="/download/{{code}}" class="download-link">
+                        <button class="common-button" onclick="copyLink(event, this)">复制链接</button>
+                    </a>
+                </div>
+                <div class="column-section">
+                    <a href="/download/{{code}}" class="download-link">
+                        <button class="download-button">下载</button>
+                    </a>
+                    <button class="delete-button" onclick="confirmDelete('{{ code }}')">删除</button>
+                </div>
+
+            </div>
+
         </div>
-    </li>
-    {% endfor %}
-</ul>
-<script src="/js/background.js"></script>
-<script src="/js/filemanage.js"></script>
+        {% endwith %}
+        {% endfor %}
+        <!-- </ul> -->
+    </div>
+    <script src="/js/background.js"></script>
+    <script src="/js/filemanage.js"></script>
 
 </body>
+
 </html>

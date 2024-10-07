@@ -5,105 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Editor</title>
+    <link rel="stylesheet" href="css/body.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/input.css">
+
     <style>
-        body {
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            /* 使用列方向，使导航和内容在纵向排列 */
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
 
-        .frosted-box {
-            width: 80%;
-            max-width: 400px;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 15px;
-            padding: 5px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            text-align: center;
-            margin: auto;
-            /* 使 frosted-box 水平居中 */
-            display: flex;
-            flex-direction: column;
-            /* 使内部元素纵向排列 */
-            justify-content: center;
-            /* 使内容在盒子内垂直居中 */
-            align-items: center;
-            /* 使内容在盒子内水平居中 */
-        }
-
-        .frosted-box-form {
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            width: 100%;
-            /* 设置容器的宽度为100% */
-        }
-
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-bottom: 10px;
-            margin-left: -10%;
-        }
-
-        .frosted-box-form label {
-            text-align: right;
-            width: 150px;
-            margin-left: -5%;
-        }
-
-
-        .frosted-box-form input[type="password"] {
-            margin-bottom: 10px;
-            padding: 5px;
-            width: 200px;
-            margin-left: -30%;
-            margin-top: -1%;
-            /* 增加 input 的顶部间距 */
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            /* 使按钮居中 */
-            width: 100%;
-        }
-
-        .button {
-            background: linear-gradient(to right, #007bff, #9b59b6);
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px 0;
-            width: 120px;
-            transition: background-color 0.3s;
-            text-decoration: none;
-            margin-left: 16%;
-            margin-bottom: 5%;
-        }
-
-        h2 {
-            margin-left: 38%;
-        }
-
-
-        .button:hover {
-            background: linear-gradient(to right, #0056b3, #6c358f);
-        }
+      
     </style>
 </head>
 
@@ -114,7 +22,7 @@
         <form action="/login" method="post">
             <div class="form-row">
                 <label for="password" class="white-label">密码:</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password", class="form-input">
             </div>
             <div class="button-container">
                 <button type="submit" class="button">登录</button>
@@ -123,6 +31,16 @@
     </div>
 
     <script src="/js/background.js"></script>
+    
+    <script>
+        // 捕获服务器返回的错误信息
+        document.addEventListener("DOMContentLoaded", function() {
+            var error = "{{ error }}";  // 从模板中获取错误信息
+            if (error) {
+                alert(error);  // 弹出错误提示
+            }
+        });
+    </script>
 </body>
 
 </html>
