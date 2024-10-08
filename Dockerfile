@@ -9,12 +9,12 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 RUN echo 'Asia/Shanghai' >/etc/timezone
 WORKDIR /app
 
-RUN mkdir /app/buffer
-RUN mkdir /app/share
-RUN mkdir /app/data
+RUN mkdir -p /app/buffer
+RUN mkdir -p /app/share
+RUN mkdir -p /app/data
+
 RUN pip install -r requirements.txt
 EXPOSE 80
 RUN chmod +x /app/init.sh
-RUN mkdir /app/buffer
 RUN rm -rf /app/Dockerfile /app/pack.sh /app/requirements.txt
 CMD ["/app/init.sh"]
