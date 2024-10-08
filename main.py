@@ -51,6 +51,6 @@ app.post("/admin")(update_config)
 
 # 运行应用
 if __name__ == "__main__":
-    interval_timer = set_interval(clear_buffer, 5)
+    interval_timer = set_interval(clear_buffer, 3600)
     uvicorn.run(app, host="0.0.0.0", port=80)
     
