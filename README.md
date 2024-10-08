@@ -1,4 +1,15 @@
-# docker打包镜像
+# MIMI Share 临时文件分享
+
+## 使用说明
+后台地址：`{ip}:{port}/admin`
+
+默认密码：admin
+
+### 服务器文件分享：
+服务器文件先放在`share`文件夹下，进后台下拉菜单选择需要分享的文件
+
+##部署
+### docker打包镜像
 
 运行打包脚本
 ```
@@ -22,7 +33,7 @@ services:
     restart: always
 ```
 
-# python 直接运行
+### python 直接运行
 
 新建目录以及安装package
 ```
