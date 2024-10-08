@@ -9,15 +9,15 @@ body {
     margin: 0;
     flex-direction: column;
     color: white;
-    background: url(/wallpaper/a.jpg) no-repeat center top;
-    background-size: cover; 
-    background-attachment: fixed; 
-    font-family: Arial, sans-serif;
+    background: url(/wallpaper/background.jpg) no-repeat center top;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Microsoft Yahei', sans-serif;
 }
 
 
 .frosted-box {
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.4);
     border-radius: 15px;
     padding: 10px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -26,3 +26,9 @@ body {
     text-align: center;
 }
 
+.colorful-text {
+    background: linear-gradient(45deg, #ff007f, #00aaff, #00ff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}

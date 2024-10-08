@@ -13,7 +13,6 @@
     color: white;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     width: 100%;
     margin-top:4%;
     /* 设置容器的宽度为100% */
@@ -41,14 +40,14 @@
 }
 
 .button {
-    background: rgb(1, 183, 1);
+    background: linear-gradient(to right, #009a7b, #80b335);
     color: white;
     border: none;
-    padding: 8px 15px;
+    padding: 8px 10px;
     border-radius: 5px;
     cursor: pointer;
     margin: 5px 0;
-    width: 30%;
+    width: 20%;
     transition: background-color 0.3s;
     text-decoration: none;
     /* font-size: 80%;  */
@@ -57,26 +56,29 @@
 }
 
 .button:hover {
-    background: darkgreen;
+    background: linear-gradient(to left, #009a7b, #80b335);
+    transform: scale(1.05);
 }
 
 .buttonlogout {
-    background: rgb(167, 1, 1);
+    background: linear-gradient(to right, #ff3333, #b82a07); /* 设置红色渐变背景色 */
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 5px 5px;
     border-radius: 5px;
     cursor: pointer;
-    margin: 5px 10px;
-    width: 60px;
+    /* margin: 5px 10px; */
+    width: 30px;
     transition: background-color 0.3s;
     text-decoration: none;
     font-size: 100%; /* 设置字体大小 */
-    margin-left: 15%px;
+    margin-top: 1%;
+    margin-left: 20%;
 }
 
 
 .buttonlogout:hover {
-    background: darkred;
+    background: linear-gradient(to left, #ff3333, #b82a07); /* 设置红色渐变背景色 */
+    transform: scale(1.05);
 }
 

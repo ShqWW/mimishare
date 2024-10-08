@@ -7,6 +7,37 @@ document.getElementById('pickupCode').addEventListener('keydown', function (even
     }
 });
 
+
+async function fetchFile() {
+    const pickupCode = document.getElementById('pickupCode').value;
+    if (!pickupCode) {
+        alert('请填写取件码');
+        return;
+    }
+
+    const response = await fetch(`/fetchfile/${pickupCode}`);
+
+    if (!response.ok) {
+        const error = await response.json();
+        alert(error.detail);  // 弹出错误信息
+        return;
+    }
+
+    const fileInfo = await response.json();
+
+
+    document.querySelector('.file-section').style.display = 'block';
+
+    document.getElementById('file-name').innerText = `文件名称: ${fileInfo.filename}`;
+    document.getElementById('file-size').innerText = `文件大小: ${fileInfo.filesize}`;
+    document.getElementById('pickupLink').href = `/download/${pickupCode}`;
+    
+}
+
+
+
+
+
 async function downloadFile() {
     const pickupCode = document.getElementById('pickupCode').value;
 

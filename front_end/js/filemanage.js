@@ -12,6 +12,7 @@ function confirmDelete(code) {
                 location.reload();
             } else {
                 alert('删除失败，请重试。');
+                location.reload();
             }
         })
         .catch(error => {
@@ -43,17 +44,18 @@ function copyCode(code) {
     tempInput.select();
     document.execCommand('copy');
     document.body.removeChild(tempInput);
-    alert('下载链接已复制到剪贴板：' + code);
+    alert('取件码已复制到剪贴板：' + code);
 }
+
+
 
 function copyLink(event, button) {
     event.preventDefault(); // 阻止默认的下载行为
-    const link = button.parentElement.href;
-
-    // 复制链接的逻辑
-    navigator.clipboard.writeText(link).then(() => {
-        alert('链接已复制！');
-    }).catch(err => {
-        console.error('复制失败!', err);
-    });
+    const tempInput = document.createElement('input');
+    tempInput.value = button.parentElement.href;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    alert('下载链接已复制到剪贴板：' + button.parentElement.href);
 }

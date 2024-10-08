@@ -4,15 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文件分享</title>
+    <title>MIMI的文件分享</title>
     <link rel="stylesheet" href="css/body.css">
     <link rel="stylesheet" href="css/upload.css">
     <link rel="stylesheet" href="css/textlink.css">
+    <link rel="stylesheet" href="css/filename.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
         }
+        
 
         .input-container {
             display: flex;
@@ -20,7 +22,7 @@
             /* 调整容器宽度 */
             margin: 0 auto;
             /* 居中容器 */
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         #pickupCode {
@@ -42,28 +44,74 @@
         button {
             flex: 1;
             /* 按钮占1份 */
-            padding: 10px;
-            font-size: 16px;
+            padding: 9px;
+            font-size: 20px;
             margin-left: 10px;
-            width: 30%;
+            max-width: 45px;
+            /* 设置最大宽度 */
+            min-height: 36px;
+            /* 设置最大宽度 */
             /* 调整按钮宽度为30% */
         }
 
-        
+        .file-section {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .label-secton {
+            flex-direction: column;
+            text-align: left;
+            margin-left: 8%;
+        }
+
+        #file-name,
+        #file-size {
+            max-width: 300px;
+            /* 设置选择框的最大宽度 */
+            min-width: 300px;
+            /* 设置选择框的最小宽度 */
+        }
+
+        .download-btn {
+            background: linear-gradient(to right, #009a7b, #80b335);
+            margin-right: 1%;
+        }
+
+        .download-btn:hover {
+            background: linear-gradient(to left, #009a7b, #80b335);
+        }
     </style>
 </head>
 
 <body>
 
     <div class="frosted-box">
-        <h2>MIMI的文件分享</h2>
-
+        <h2 class="colorful-text">MIMI的文件分享</h2>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <div class="input-container">
             <input type="text" id="pickupCode" placeholder="请输入取件码" required>
-            <button onclick="downloadFile()">下载文件</button>
+            <button onclick="fetchFile()" title="取件">
+                <i class="fa-solid fa-box-open"></i>
+            </button>
+        </div>
+        <div class="file-section">
+            <div class="label-secton">
+                <p id="file-name", class="file-name">unknown</p>
+                <p id="file-size">unknown</p>
+            </div>
+            <a href="" class="download-link" id="pickupLink">
+                <button type="button" id="downloadButton" class="download-btn" title="下载文件">
+                    <i class="fas fa-download"></i>
+                </button>
+            </a>
         </div>
         <!-- 上传按钮 -->
-        <a href="/upload" class="text-link" title="上传文件">上传文件？点击这里</a>
+
+        <a href="/upload" class="text-link" title="上传文件">分享文件？点击这里</a>
+
     </div>
 
     <!-- 引入外部 JavaScript 文件 -->

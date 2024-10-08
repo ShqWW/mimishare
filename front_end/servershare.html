@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文件分享</title>
+    <title>MIMI的文件分享</title>
     <link rel="stylesheet" href="css/body.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/servershare.css">
@@ -32,9 +32,10 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <div class="frosted-box">
-
-        <p id="fileInfo" , class="file-name">云端文件分享</p>
+        <h2>云端文件分享</h2>
+        <p id="fileInfo" , class="file-name">文件提前放在云端的share文件夹中</p>
         <div class="select-container">
             <label for="filename">选择文件:</label>
             <select id="filename" name="filename">
@@ -57,7 +58,7 @@
 
 
 
-        <button id="uploadButton">上传文件</button>
+        <button id="uploadButton">分享文件</button>
 
         <div class="result" id="rr">
             <div class="container">
@@ -65,9 +66,10 @@
                     <canvas id="qrCanvas"></canvas> <!-- 设置画布大小 -->
                 </div>
                 <div class="right-section">
-                    <button id="pickupCodeButton">取件码</button>
+                    <button id="pickupCodeButton" code="" onclick="copyCode(this)" style="font-size: 18px" title="复制取件码">0000</button>
                     <a id="pickupLink" href="/" download>
-                        <button id="copyLinkButton">复制取件链接</button>
+                        <button id="copyLinkButton" onclick="copyLink(event, this)" style="font-size: 18px" title="复制链接"><i
+                                class="fa-solid fa-link"></i></button>
                     </a>
                 </div>
             </div>

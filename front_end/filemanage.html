@@ -15,6 +15,9 @@
             justify-content: flex-start;
             margin-top: 30px;
         }
+        .file-name {
+            max-width: 250px;
+        }
     </style>
 </head>
 
@@ -25,10 +28,11 @@
         <a href="filemanage" style="background: linear-gradient(to right, #007bff, #9b59b6);">文件管理</a>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <div class="cards-container">
         <!-- <ul id="files-list"> -->
         {% for code, file_info in files_with_codes.items() %}
-            {% with file_name=file_info.0, expiration=file_info.1 %}
+        {% with file_name=file_info.0, expiration=file_info.1 %}
         <div class="frosted-box">
             <span class="file-name">{{ file_name }}</span>
             <span>过期时间:{{ expiration }}</span>
@@ -37,17 +41,21 @@
                 <div class="left-section">
                     <canvas class="qrCanvas" data-code="{{ code }}" width="100" height="100"></canvas>
                 </div>
-                <div class="column-section">
-                    <button class="common-button" onclick="copyCode('{{ code }}')">{{ code }}</button>
-                    <a href="/download/{{code}}" class="download-link">
-                        <button class="common-button" onclick="copyLink(event, this)">复制链接</button>
-                    </a>
-                </div>
-                <div class="column-section">
-                    <a href="/download/{{code}}" class="download-link">
-                        <button class="download-button">下载</button>
-                    </a>
-                    <button class="delete-button" onclick="confirmDelete('{{ code }}')">删除</button>
+                <div class="btn-section">
+                    <div class="column-section">
+                        <button class="common-button" onclick="copyCode('{{ code }}')"  title="复制取件码">{{ code }}</button>
+                        <a href="/download/{{code}}" class="download-link">
+                            <button class="common-button" onclick="copyLink(event, this)" style="font-size: 19px"  title="复制链接">
+                                <i class="fa-solid fa-link"></i></button>
+                        </a>
+                    </div>
+                    <div class="column-section">
+                        <a href="/download/{{code}}" class="download-link">
+                            <button class="download-button"><i class="fas fa-download" title="下载"></i></button>
+                        </a>
+                        <button class="delete-button" onclick="confirmDelete('{{ code }}')"><i
+                                class="fa-solid fa-trash-can" title="删除"></i></button>
+                    </div>
                 </div>
 
             </div>
@@ -57,7 +65,6 @@
         {% endfor %}
         <!-- </ul> -->
     </div>
-    <script src="/js/background.js"></script>
     <script src="/js/filemanage.js"></script>
 
 </body>

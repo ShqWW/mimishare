@@ -10,8 +10,8 @@
 
 .frosted-box {
     width: 100%;
-    max-width: 300px;
-    min-width: 280px;
+    max-width: 260px;
+    min-width: 260px;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -62,44 +62,44 @@
 
 
 .delete-button {
-    background: rgb(145, 4, 4);
+    background: linear-gradient(to right, #ff3333, #b82a07); /* 设置红色渐变背景色 */
     color: white;
     border: none;
-    padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.2s;
     /* 设置固定宽度和高度以确保一致性 */
-    width: 80px;
+    width: 40px;
     /* 设置按钮固定宽度 */
     height: 40px;
     /* 设置按钮固定高度 */
-    font-size: 14px;
+    font-size: 18px;
 }
 
 .delete-button:hover {
-    background: #701903;
+    background: linear-gradient(to left, #ff3333, #b82a07); /* 设置红色渐变背景色 */
+    transform: scale(1.05);
 }
 
 
 .download-button {
-    background: rgb(2, 183, 77);
+    background: linear-gradient(to right, #009a7b, #80b335);
     color: white;
     border: none;
-    padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.2s;
     /* 设置固定宽度和高度以确保一致性 */
-    width: 80px;
+    width: 40px;
     /* 设置按钮固定宽度 */
     height: 40px;
     /* 设置按钮固定高度 */
-    font-size: 14px; 
+    font-size: 18px; 
 }
 
 .download-button:hover {
-    background: #027918;
+    background: linear-gradient(to left, #009a7b, #80b335);
+    transform: scale(1.05);
 }
 
 .common-button {
@@ -144,7 +144,7 @@
     flex-wrap: wrap; /* 自动换行 */
     background-color: rgba(255, 255, 255, 0); /* 透明背景 */
     border-radius: 10px; /* 圆角 */
-    margin-left:9%;
+    margin-left:13%;
     margin-top: 3%;
 }
 
@@ -155,7 +155,7 @@
     align-items: center;
     width: 80%;
     margin:2px;
-    margin-left:-15%
+    margin-left:-15%;
 }
 
 .left-section {
@@ -163,6 +163,14 @@
     justify-content: center;
     align-items: center;
     margin-bottom: -3%;
+}
+
+.btn-section {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    margin-left: 4%;
+    /* flex-direction: row; */
 }
 
 .column-section {

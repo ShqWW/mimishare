@@ -18,7 +18,7 @@ async def generate_code(request: Request):
     request_data = await request.json()
     code = generate_unique_code()
     data = get_data_json()
-    data[code] = (request_data.get("filename", "unknown"), int(request_data.get("expiration")))
+    data[code] = (request_data.get("filename", "unknown"), calculate_expiration_time(int(request_data.get("expiration"))))
     async with aio_open(DATAJSONPATH, mode='w') as jsonfile:
         await jsonfile.write(json.dumps(data))
     return JSONResponse(content={"code": code})
@@ -37,7 +37,6 @@ async def merge_chunk(request: Request):
     code = request_data.get("code", "1234")
     data = get_data_json()
     file_name = data[code][0]
-    data[code][1] = calculate_expiration_time(data[code][1])
     async with aio_open(DATAJSONPATH, mode='w') as jsonfile:
         await jsonfile.write(json.dumps(data))
     chunk_path = os.path.join(BUFFERPATH, code)
@@ -46,6 +45,13 @@ async def merge_chunk(request: Request):
     output_folder = os.path.join(UPLOADPATH, code)
     os.makedirs(output_folder)
     output_file = os.path.join(output_folder, file_name)
+    # 自定义排序函数
+    def sort_key(path):
+        # 通过分割字符串获取数字部分，并转换为整数
+        return int(path.split('/')[-1])
+
+    # 使用 sorted() 进行排序
+    files_to_merge = sorted(files_to_merge, key=sort_key)
     with open(output_file, 'wb') as outfile:
         for filename in files_to_merge:
             with open(filename, 'rb') as infile:

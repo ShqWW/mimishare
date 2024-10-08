@@ -49,7 +49,7 @@
             display: flex;
             align-items: center;
             /* 垂直居中对齐 */
-            margin-left: 20%;
+            margin-left: 35%;
         }
     </style>
     <script>
@@ -59,11 +59,12 @@
 </head>
 
 <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <div class="frosted-box">
-        <h2>MIMI的文件分享</h2>
-        <p id="fileInfo", class="file-name">文件分享(先选好过期时间再上传文件)</p>
+        <h2 class="colorful-text">MIMI的文件分享</h2>
+        <p id="fileInfo" , class="file-name">先选过期时间再上传</p>
         <div class="select-container">
-            <label for="expiration">文件过期时间:</label>
+            <label for="expiration" style="font-size: 24px"><i class="fa-regular fa-clock" style="color: #B197FC;"></i></label>
             <select id="expiration" name="expiration">
                 <option value="60">一分钟</option>
                 <option value="3600">一小时</option>
@@ -100,9 +101,10 @@
                     <canvas id="qrCanvas" width="100" height="100"></canvas> <!-- 设置画布大小 -->
                 </div>
                 <div class="right-section">
-                    <button id="pickupCodeButton">取件码</button>
+                    <button id="pickupCodeButton" code='' onclick="copyCode(this)" style="font-size: 18px" title="复制取件码">0000</button>
                     <a id="pickupLink" href="/" download>
-                        <button id="copyLinkButton">复制取件链接</button>
+                        <button id="copyLinkButton" onclick="copyLink(event, this)" style="font-size: 18px" title="复制链接"><i
+                                class="fa-solid fa-link"></i></button>
                     </a>
                 </div>
             </div>
