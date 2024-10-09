@@ -16,5 +16,5 @@ RUN mkdir -p /app/data
 RUN pip install -r requirements.txt
 EXPOSE 80
 RUN chmod +x /app/init.sh
-RUN rm -rf /app/Dockerfile /app/pack.sh /app/requirements.txt
+RUN rm -rf /app/Dockerfile /app/pack.sh /app/requirements.txt /app/mdpic
 CMD ["/app/init.sh"]
