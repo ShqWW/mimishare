@@ -4,23 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIMI的文件分享</title>
+    <link rel="icon" href="/icon/logo.svg" type="image/png">
+    <title>后台管理</title>
     <link rel="stylesheet" href="css/body.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/servershare.css">
     <link rel="stylesheet" href="css/textlink.css">
     <style>
         .file-name {
-    max-width: 300px;
-    font-size: 18px;
-    font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    display: block; /* 作为块级元素 */
-    margin: 0 auto; /* 使其居中对齐 */
-    margin-bottom: 20px;
-}
+            max-width: 300px;
+            font-size: 18px;
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: block;
+            /* 作为块级元素 */
+            margin: 0 auto;
+            /* 使其居中对齐 */
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 
@@ -60,22 +63,22 @@
 
         <button id="uploadButton">分享文件</button>
 
-        <div class="result" id="rr">
-            <div class="container">
-                <div class="left-section">
-                    <canvas id="qrCanvas"></canvas> <!-- 设置画布大小 -->
-                </div>
-                <div class="right-section">
-                    <button id="pickupCodeButton" code="" onclick="copyCode(this)" style="font-size: 18px" title="复制取件码">0000</button>
-                    <a id="pickupLink" href="/" download>
-                        <button id="copyLinkButton" onclick="copyLink(event, this)" style="font-size: 18px" title="复制链接"><i
-                                class="fa-solid fa-link"></i></button>
-                    </a>
-                </div>
+        <div class="result-container">
+            <div class="left-section">
+                <canvas id="qrCanvas"></canvas> <!-- 设置画布大小 -->
+            </div>
+            <div class="right-section">
+                <button id="pickupCodeButton" code="" onclick="copyCode(this)" style="font-size: 18px"
+                    title="复制取件码">0000</button>
+                <a id="pickupLink" href="/" download>
+                    <button id="copyLinkButton" onclick="copyLink(event, this)" style="font-size: 18px" title="复制链接"><i
+                            class="fa-solid fa-link"></i></button>
+                </a>
             </div>
         </div>
+    </div>
 
-        <script src="js/servershare.js"></script>
+    <script src="js/servershare.js"></script>
 
 
 </body>

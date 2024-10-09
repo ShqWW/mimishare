@@ -4,27 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Editor</title>
+    <link rel="icon" href="/icon/logo.svg" type="image/png">
+    <title>登录</title>
     <link rel="stylesheet" href="css/body.css">
     <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/input.css">
+    <link rel="stylesheet" href="css/form.css">
 
     <style>
-
+        .form-row
+        {
+            margin-left: -15%;
+        }
       
     </style>
 </head>
 
 <body>
 
-    <div class="frosted-box frosted-box-form">
-        <h2>登录界面</h2>
+    <div class="frosted-box">
+        <h2>用户登录</h2>
         <form action="/login" method="post">
             <div class="form-row">
                 <label for="password" class="white-label">密码:</label>
                 <input type="password" id="password" name="password", class="form-input">
             </div>
-            <div class="button-container">
+            <div class="form-button-container">
                 <button type="submit" class="button">登录</button>
             </div>
         </form>

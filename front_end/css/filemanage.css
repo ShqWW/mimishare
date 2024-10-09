@@ -20,7 +20,15 @@
     margin: 10px;
 }
 
-
+.cards-container {
+    display: flex;
+    flex-wrap: wrap; /* 自动换行 */
+    background-color: rgba(255, 255, 255, 0); /* 透明背景 */
+    border-radius: 10px; /* 圆角 */
+    margin-top: 3%;
+    justify-content: flex-start; /* 默认靠左对齐 */
+    margin-left: 2%;
+}
 
 .frosted-box>*:not(:last-child) {
     margin-bottom: 5px;
@@ -139,14 +147,7 @@
     /* 按钮之间的间隔 */
 }
 
-.cards-container {
-    display: flex;
-    flex-wrap: wrap; /* 自动换行 */
-    background-color: rgba(255, 255, 255, 0); /* 透明背景 */
-    border-radius: 10px; /* 圆角 */
-    margin-left:13%;
-    margin-top: 3%;
-}
+
 
 .container-row {
     display: flex;

@@ -27,8 +27,43 @@ body {
 }
 
 .colorful-text {
-    background: linear-gradient(45deg, #ff007f, #00aaff, #00ff00);
+    background: linear-gradient(45deg, #007bff, #00aaff, #b700ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* 垂直居中对齐 */
     text-align: center;
+    justify-content: center;
+    margin-left: -10%;
+}
+
+.logo {
+    width: 8%;
+    /* 根据需要调整大小 */
+    height: 8%;
+    margin-right: 20px;
+    /* 标题左侧 logo 的间距 */
+    /* animation: rotation 8s linear infinite; */
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    animation: float 3s ease-in-out infinite;
 }

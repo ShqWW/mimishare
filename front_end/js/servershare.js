@@ -43,8 +43,7 @@ async function autoUpload() {
         code = data.code;
         console.log(code);
         document.getElementById('fileInfo').textContent = '已上传文件名：' + selectFile.value;
-        document.querySelector('.right-section').style.display = 'flex';
-        document.querySelector('.left-section').style.display = 'flex';
+        document.querySelector('.result-container').style.display = 'flex';
         pickupCodeButton.innerText = code;
         pickupCodeButton.code = code;
         pickupLinkElement.href = 'download/' + code; // 更新为新的取件链接
@@ -55,7 +54,7 @@ async function autoUpload() {
             value: pickupLinkElement.href,
             foreground: 'white',
             background: 'transparent',
-            size: 200 // 设置二维码的大小
+            size: 100 // 设置二维码的大小
         });
     }
 }

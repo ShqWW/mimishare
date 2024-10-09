@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/icon/logo.svg" type="image/png">
     <title>文件分享</title>
     <link rel="stylesheet" href="css/body.css">
     <link rel="stylesheet" href="css/upload.css">
@@ -37,19 +38,15 @@
         /* 设置标签的样式 */
         label {
             color: white;
-            /* 设置标签文字为白色 */
             font-size: 16px;
-            /* 可选: 设置字体大小 */
             margin-right: 10px;
-            /* 可选: 标签和下拉框之间的间距 */
         }
 
         /* 使用 flex 布局使标签和下拉框水平排列 */
         .select-container {
             display: flex;
             align-items: center;
-            /* 垂直居中对齐 */
-            margin-left: 35%;
+            justify-content: center;
         }
     </style>
     <script>
@@ -61,7 +58,10 @@
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <div class="frosted-box">
-        <h2 class="colorful-text">MIMI的文件分享</h2>
+        <div class="header">
+            <img src="/icon/logo.svg" class="logo" alt="Logo"/>
+            <h2 class="colorful-text">MIMISHARE</h2>
+        </div>
         <p id="fileInfo" , class="file-name">先选过期时间再上传</p>
         <div class="select-container">
             <label for="expiration" style="font-size: 24px"><i class="fa-regular fa-clock" style="color: #B197FC;"></i></label>
@@ -95,19 +95,17 @@
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
-        <div class="result" id="rr">
-            <div class="container">
+        <div class="result-container">
                 <div class="left-section">
-                    <canvas id="qrCanvas" width="100" height="100"></canvas> <!-- 设置画布大小 -->
+                    <canvas id="qrCanvas"></canvas> <!-- 设置画布大小 -->
                 </div>
                 <div class="right-section">
-                    <button id="pickupCodeButton" code='' onclick="copyCode(this)" style="font-size: 18px" title="复制取件码">0000</button>
+                    <button id="pickupCodeButton" code='' onclick="copyCode(this)" style="font-size: 18px" title="复制取件码" style="font-size: 19px">0000</button>
                     <a id="pickupLink" href="/" download>
-                        <button id="copyLinkButton" onclick="copyLink(event, this)" style="font-size: 18px" title="复制链接"><i
+                        <button id="copyLinkButton" onclick="copyLink(event, this)" style="font-size: 19px" title="复制链接"><i
                                 class="fa-solid fa-link"></i></button>
                     </a>
                 </div>
-            </div>
         </div>
 
         <a href="/" class="text-link" title="下载文件">下载文件？点击这里</a>

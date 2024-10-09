@@ -1,36 +1,13 @@
 .frosted-box {
     width: 80%;
-    max-width: 400px;
+    max-width: 300px;
     text-align: center;
     margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.frosted-box-form {
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    /* 设置容器的宽度为100% */
-}
-
-.form-row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
-    margin-left: -10%;
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    /* 使按钮居中 */
-    width: 100%;
+    text-align: center;
 }
 
 .button {
@@ -44,15 +21,11 @@
     width: 120px;
     transition: background-color 0.3s;
     text-decoration: none;
-    margin-left: 16%;
-    margin-bottom: 5%;
+    /* margin-left: 16%; */
+    /* margin-bottom: 5%; */
 }
-
-h2 {
-    margin-left: 38%;
-}
-
 
 .button:hover {
     background: linear-gradient(to right, #0056b3, #6c358f);
+    transform: scale(1.05);
 }

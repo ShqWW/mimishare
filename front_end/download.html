@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIMI的文件分享</title>
+    <link rel="icon" href="/icon/logo.svg" type="image/png">
+    <title>MIMISHARE</title>
     <link rel="stylesheet" href="css/body.css">
     <link rel="stylesheet" href="css/upload.css">
     <link rel="stylesheet" href="css/textlink.css">
@@ -14,14 +15,14 @@
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
         }
-        
+
 
         .input-container {
             display: flex;
             width: 80%;
-            /* 调整容器宽度 */
+            flex-direction: row;
+            justify-content: space-between;
             margin: 0 auto;
-            /* 居中容器 */
             margin-bottom: 18px;
         }
 
@@ -89,7 +90,11 @@
 <body>
 
     <div class="frosted-box">
-        <h2 class="colorful-text">MIMI的文件分享</h2>
+
+        <div class="header">
+            <img src="/icon/logo.svg" class="logo" alt="Logo"/>
+            <h2 class="colorful-text">MIMISHARE</h2>
+        </div>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <div class="input-container">
             <input type="text" id="pickupCode" placeholder="请输入取件码" required>
@@ -99,7 +104,7 @@
         </div>
         <div class="file-section">
             <div class="label-secton">
-                <p id="file-name", class="file-name">unknown</p>
+                <p id="file-name" , class="file-name">unknown</p>
                 <p id="file-size">unknown</p>
             </div>
             <a href="" class="download-link" id="pickupLink">

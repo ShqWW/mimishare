@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>库存文件管理</title>
+    <link rel="icon" href="/icon/logo.svg" type="image/png">
+    <title>后台管理</title>
     <link rel="stylesheet" href="/css/body.css">
     <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/filemanage.css">
@@ -43,7 +44,7 @@
                 </div>
                 <div class="btn-section">
                     <div class="column-section">
-                        <button class="common-button" onclick="copyCode('{{ code }}')"  title="复制取件码">{{ code }}</button>
+                        <button class="common-button" onclick="copyCode('{{ code }}')" style="font-size: 19px"  title="复制取件码">{{ code }}</button>
                         <a href="/download/{{code}}" class="download-link">
                             <button class="common-button" onclick="copyLink(event, this)" style="font-size: 19px"  title="复制链接">
                                 <i class="fa-solid fa-link"></i></button>
@@ -57,9 +58,7 @@
                                 class="fa-solid fa-trash-can" title="删除"></i></button>
                     </div>
                 </div>
-
             </div>
-
         </div>
         {% endwith %}
         {% endfor %}

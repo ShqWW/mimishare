@@ -1,6 +1,10 @@
 .frosted-box {
     width: 80%;
     max-width: 400px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
 }
 
 h2 {
@@ -87,24 +91,24 @@ button:hover {
     font-size: 18px;
 }
 
-.container {
-    display: flex;
+.result-container {
+    display: none;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 80%;
     margin: 0 auto;
+    width: 88%;
 }
 
 .left-section {
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     margin-right: auto;
 }
 
 .right-section {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -112,18 +116,14 @@ button:hover {
 }
 
 #qrCanvas {
-    width: 100%;
-    height: auto;
+    overflow: hidden;
+    background-color: transparent;
+    width:95%;
+    height:95%;
 }
 
 .message-buttons {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-#qrCanvas {
-    border-radius: 10px;
-    overflow: hidden;
-    background-color: transparent;
 }

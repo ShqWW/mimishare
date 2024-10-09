@@ -13,6 +13,13 @@ let code;
 fileUploader.addEventListener('dragover', (e) => {
     e.preventDefault();
 });
+var qr = new QRious({
+    element: document.getElementById('qrCanvas'),
+    value: "afsdfasfsfgesgsdfgsfdgsgsgsgsgsggsgsg", // 在这里放入取件码
+    foreground: 'white', // 设置前景颜色为白色
+    background: 'transparent',
+    size: 100
+});
 
 fileUploader.addEventListener('drop', (e) => {
     e.preventDefault();
@@ -140,8 +147,7 @@ async function autoUpload(file, chunk_size = 30 * 1024 * 1024) {
     }
     else {
         document.getElementById('fileInfo').textContent = '已上传文件名：' + file.name;
-        document.querySelector('.right-section').style.display = 'flex';
-        document.querySelector('.left-section').style.display = 'flex';
+        document.querySelector('.result-container').style.display = 'flex';
         pickupCodeButton.innerText = code;
         pickupCodeButton.code = code;
         pickupCodeButton.href = code;
