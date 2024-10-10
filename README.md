@@ -1,11 +1,15 @@
 <div align="center">
-<h1>MIMISHARE:部署在NAS上的轻量文件分享软件</h1>
+    <img src="icon/logo.svg" alt="图标" width="80" height="80" style="vertical-align: middle;"/> 
+     <h1 style="display: inline; background: linear-gradient(45deg, #007bff, #00aaff, #b700ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        MIMISHARE
+    </h1>
+    <h2 style="display: inline; vertical-align: middle;">部署在NAS上的轻量文件分享软件</h2>
 </div>
 
 
 ## 界面预览
-![本地图片](mdpic/pic1.jpg)
-![本地图片](mdpic/pic2.jpg)
+![demo1](mdpic/pic1.jpg)
+![demo2](mdpic/pic2.jpg)
 
 ## 使用说明
 
