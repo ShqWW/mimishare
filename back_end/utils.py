@@ -6,22 +6,111 @@ from .variable import *
 from datetime import datetime, timedelta
 import shutil
 import threading
-import logging
-logging.basicConfig(level=logging.INFO)
+import sqlite3
+import json
+import os
 
-def get_config_json():
-    json_file_path = 'config/config.json'
-    if not os.path.exists(json_file_path):
-        return {}
-    with open(json_file_path, "r") as file:
-        return json.load(file)
 
-def get_data_json():
-    if not os.path.exists(DATAJSONPATH):
-        return {}
-    with open(DATAJSONPATH, "r") as file:
-        return json.load(file)
+CREATE_CONFIG_TABLE_SQL = '''
+CREATE TABLE IF NOT EXISTS config (
+    config_dict VARCHAR(6) PRIMARY KEY,
+    value TEXT
+);
+'''
+
+CREATE_UPLOAD_TABLE_SQL = '''
+CREATE TABLE IF NOT EXISTS upload (
+    code VARCHAR(4) PRIMARY KEY,
+    filename TEXT,
+    deadline TEXT,
+    buffer BOOLEAN
+);
+'''
+
+def initialize_db():
+    if not os.path.exists(DBPATH):
+        with sqlite3.connect(DBPATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute(CREATE_CONFIG_TABLE_SQL)
+            cursor.execute(CREATE_UPLOAD_TABLE_SQL)
+            cursor.execute("INSERT OR REPLACE INTO config (config_dict, value) VALUES (?,?)", ("config", json.dumps(initial_config)))
+            conn.commit()
     
+    config = read_config_dict()
+    missing_keys = {key: initial_config[key] for key in initial_config if key not in config}
+    if missing_keys:
+        write_config_dict({**config, **missing_keys})
+
+def read_config_dict():
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT value FROM config WHERE config_dict = \'config\';")
+        result = cursor.fetchone()
+        if result:
+            return json.loads(result[0])
+        return {}
+
+def write_config_dict(dict_data):
+    """将配置字典写入数据库"""
+    initialize_db()
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE config SET value = ? WHERE config_dict = ?", (json.dumps(dict_data), "config"))
+        conn.commit()
+
+def read_upload_dict():
+    result_dict = {}
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT code, filename, deadline FROM upload WHERE buffer = False")
+        results = cursor.fetchall()
+        for row in results:
+            result_dict[row[0]] = (row[1], row[2])
+        conn.commit()
+    return result_dict
+
+def read_buffer_dict():
+    result_dict = {}
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT code, filename, deadline FROM upload WHERE buffer = True")
+        results = cursor.fetchall()
+        for row in results:
+            result_dict[row[0]] = (row[1], row[2])
+        conn.commit()
+    return result_dict
+
+def search_record_by_code(code):
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT filename, deadline FROM upload WHERE code = ?", (code, ))
+        results = cursor.fetchone()
+        conn.commit()
+    if results:
+        return results[0], results[1]
+    return None, None
+
+def delete_record_by_code(code):
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM upload WHERE code = ?", (code, ))
+        conn.commit()
+    
+def add_record_by_code(code, filename, deadline, buffer):
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT OR REPLACE INTO upload (code, filename, deadline, buffer) VALUES (?,?,?,?)", (code, filename, deadline, buffer))
+        conn.commit()
+
+def list_existing_codes():
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT code FROM upload')
+        results = cursor.fetchall()
+        conn.commit() 
+    existing_codes = [row[0] for row in results]
+    return existing_codes
+
 # 检查当前用户
 def get_current_user(token: str):
     if token != "admin":
@@ -29,26 +118,23 @@ def get_current_user(token: str):
     return token
 
 def generate_unique_code():
-    existing_codes = get_data_json()
-    while True:
-        new_code = f"{random.randint(0, 9999):04d}"
-        if new_code not in existing_codes:
-            return new_code
-
+    result = True
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        while result:
+            new_code = f"{random.randint(0, 9999):04d}"
+            cursor.execute('SELECT code FROM upload WHERE code = ?', (new_code,))
+            result = cursor.fetchone()
+        conn.commit()
+    return new_code
 
 def calculate_expiration_time(expiration):
     if expiration==0:
         return "2199-01-01 00:00:00"
 
-    # 获取当前时间
     now = datetime.now()
-    
-    # 计算过期时间
     expiration_time = now + timedelta(seconds=expiration)
-    
-    # 格式化过期时间为字符串
     expiration_str = expiration_time.strftime("%Y-%m-%d %H:%M:%S")
-    
     return expiration_str
 
 def is_outdate(file_time_str):
@@ -80,33 +166,38 @@ def get_file_size(file_path):
             return f"{size_in_gb:.2f} GB"
     else:
         return "文件不存在"
-    
 
-def clear_buffer():
-    data_dict = get_data_json()
+def clear_outdate():
+    data_dict = read_upload_dict()
     code_list = list(data_dict.keys())
     delete_code_list = []
     for code in code_list:
         filetime = data_dict[code][1]
-        # 过期就清空字典
         if is_outdate(filetime):
-            logging.info(f'Deleting file with code: {code}')
-            del data_dict[code]
+            print(f'Clear file with code: {code}')
+            delete_record_by_code(code)
             delete_code_list.append(code)
-    with open(DATAJSONPATH, mode='w') as jsonfile:
-        jsonfile.write(json.dumps(data_dict))
+            code_list.remove(code)
 
-    tree_list = os.listdir(BUFFERPATH)
-    for subfolder in tree_list:
-        buffer_path = os.path.join(BUFFERPATH, subfolder)
-        if subfolder in delete_code_list and os.path.exists(buffer_path):  
-            shutil.rmtree(buffer_path)
+    for subfolder in os.listdir(UPLOADPATH):
+        tem_path = os.path.join(UPLOADPATH, subfolder)
+        if subfolder in delete_code_list: 
+            shutil.rmtree(tem_path)
 
-    tree_list = os.listdir(UPLOADPATH)
-    for subfolder in tree_list:
-        upload_path = os.path.join(UPLOADPATH, subfolder)
-        if subfolder in delete_code_list and os.path.exists(upload_path): 
-            shutil.rmtree(upload_path)
+def clear_buffer():
+    data_dict = read_buffer_dict()
+    code_list = list(data_dict.keys())
+    for code in code_list:
+        filetime = data_dict[code][1]
+        if is_outdate(filetime):
+            print(f'Clear buffer with code: {code}')
+            delete_record_by_code(code)
+            code_list.remove(code)
+
+    for subfolder in os.listdir(BUFFERPATH):
+        tem_path = os.path.join(BUFFERPATH, subfolder)
+        if subfolder not in code_list: 
+            shutil.rmtree(tem_path)
 
 
 def set_interval(func, interval):

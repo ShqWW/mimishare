@@ -18,14 +18,12 @@
             justify-content: flex-start;
             margin-top: 30px;
         }
-
-
     </style>
 </head>
 
 <body>
     <div class="nav-container">
-        <a href="admin" style="background: linear-gradient(to right, #007bff, #9b59b6);">后台设置</a>
+        <a href="admin" style="background:linear-gradient(45deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);">后台设置</a>
         <a href="servershare">云端分享</a>
         <a href="filemanage">文件管理</a>
     </div>
@@ -44,6 +42,11 @@
             <div class="form-row">
                 <label for="chunksize" class="white-label">分块大小 (MB):</label>
                 <input type="number" id="chunksize" name="chunksize" value="{{ json_data.get('chunksize', '') }}"
+                    class="form-input">
+            </div>
+            <div class="form-row">
+                <label for="buffertime" class="white-label">超时时间 (秒):</label>
+                <input type="number" id="buffertime" name="buffertime" value="{{ json_data.get('buffertime', '') }}"
                     class="form-input">
             </div>
             <div class="form-row">

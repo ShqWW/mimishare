@@ -35,54 +35,60 @@
             box-sizing: border-box;
             font-size: 16px;
             height: 80%;
-            margin-top: 1.6%;
             width: 60%;
             /* 调整宽度为60% */
             background-color: rgba(0, 0, 0, 0.3);
             color: white;
         }
 
-        button {
+        .theme-button {
             flex: 1;
             /* 按钮占1份 */
             padding: 9px;
             font-size: 20px;
-            margin-left: 10px;
-            max-width: 45px;
-            /* 设置最大宽度 */
-            min-height: 36px;
-            /* 设置最大宽度 */
-            /* 调整按钮宽度为30% */
+            margin-left: 20px;
+            max-width: 42px;
+            height: 42px;
         }
 
         .file-section {
-            display: none;
+            /* display: none; */
+            display: flex;
             flex-direction: column;
             align-items: center;
 
         }
 
-        .label-secton {
+        .label-section {
+            display: flex;
             flex-direction: column;
-            text-align: left;
-            margin-left: 8%;
+            justify-content: center;
         }
 
-        #file-name,
-        #file-size {
+        .file-name {
             max-width: 300px;
             /* 设置选择框的最大宽度 */
             min-width: 300px;
+            min-height: 30px;
+            font-size: 24px;
+            margin-top: 10px;
+            margin-bottom: 10px;
             /* 设置选择框的最小宽度 */
         }
 
+        #file-size {
+            margin-bottom: 15px;
+            font-size: 15px;
+
+        }
+
         .download-btn {
-            background: linear-gradient(to right, #009a7b, #80b335);
+            background: linear-gradient(45deg, #3da342, #53c258);
             margin-right: 1%;
         }
 
         .download-btn:hover {
-            background: linear-gradient(to left, #009a7b, #80b335);
+            background: linear-gradient(135deg, #4CAF50, #81C784); 
         }
     </style>
 </head>
@@ -92,35 +98,42 @@
     <div class="frosted-box">
 
         <div class="header">
-            <img src="/icon/logo.svg" class="logo" alt="Logo"/>
+            <img src="/icon/logo.svg" class="logo" alt="Logo" />
             <h2 class="colorful-text">MIMISHARE</h2>
         </div>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <div class="input-container">
             <input type="text" id="pickupCode" placeholder="请输入取件码" required>
-            <button onclick="fetchFile()" title="取件">
+            <button onclick="fetchFile()" title="取件" , class="theme-button">
                 <i class="fa-solid fa-box-open"></i>
             </button>
         </div>
+        <a href="/upload" class="text-link" title="上传文件">分享文件？点击这里</a>
+    </div>
+
+
+    <div class="frosted-box" id="fetch-result">
         <div class="file-section">
-            <div class="label-secton">
-                <p id="file-name" , class="file-name">unknown</p>
-                <p id="file-size">unknown</p>
+            <div class="msg-box">
+                <label id="filetitle-share" , class="file-name">unknown</label>
+                <label id="file-size">unknown</label>
             </div>
             <a href="" class="download-link" id="pickupLink">
-                <button type="button" id="downloadButton" class="download-btn" title="下载文件">
+                <button type="button" id="downloadButton" class="theme-button download-btn" title="下载文件">
                     <i class="fas fa-download"></i>
                 </button>
             </a>
         </div>
-        <!-- 上传按钮 -->
-
-        <a href="/upload" class="text-link" title="上传文件">分享文件？点击这里</a>
-
     </div>
+            <!-- 上传按钮 -->
 
-    <!-- 引入外部 JavaScript 文件 -->
-    <script src="js/download.js"></script>
+            
+
+
+
+            <!-- 引入外部 JavaScript 文件 -->
+            <script src="js/filetype.js"></script>
+            <script src="js/download.js"></script>
 
 </body>
 

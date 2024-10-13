@@ -13,21 +13,22 @@ body {
     background-size: cover;
     background-attachment: fixed;
     font-family: 'Microsoft Yahei', sans-serif;
+    gap: 5%;
 }
 
 
 .frosted-box {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     padding: 10px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.247);
     text-align: center;
 }
 
 .colorful-text {
-    background: linear-gradient(45deg, #007bff, #00aaff, #b700ff);
+    background: linear-gradient(45deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

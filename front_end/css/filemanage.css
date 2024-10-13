@@ -25,7 +25,6 @@
     flex-wrap: wrap; /* 自动换行 */
     background-color: rgba(255, 255, 255, 0); /* 透明背景 */
     border-radius: 10px; /* 圆角 */
-    margin-top: 3%;
     justify-content: flex-start; /* 默认靠左对齐 */
     margin-left: 2%;
 }
@@ -70,7 +69,7 @@
 
 
 .delete-button {
-    background: linear-gradient(to right, #ff3333, #b82a07); /* 设置红色渐变背景色 */
+    background: linear-gradient(45deg, #ff3333, #b82a07); /* 设置红色渐变背景色 */
     color: white;
     border: none;
     border-radius: 5px;
@@ -85,13 +84,13 @@
 }
 
 .delete-button:hover {
-    background: linear-gradient(to left, #ff3333, #b82a07); /* 设置红色渐变背景色 */
+    background: linear-gradient(225deg, #ff3333, #b82a07); /* 设置红色渐变背景色 */
     transform: scale(1.05);
 }
 
 
 .download-button {
-    background: linear-gradient(to right, #009a7b, #80b335);
+    background: linear-gradient(45deg, #3da342, #53c258);
     color: white;
     border: none;
     border-radius: 5px;
@@ -106,12 +105,12 @@
 }
 
 .download-button:hover {
-    background: linear-gradient(to left, #009a7b, #80b335);
+    background: linear-gradient(135deg, #4CAF50, #81C784); 
     transform: scale(1.05);
 }
 
-.common-button {
-    background: linear-gradient(to right, #007bff, #9b59b6);
+.code-button {
+    background: rgba(128, 128, 128, 0.4);
     color: white;
     border: none;
     padding: 8px 12px;
@@ -126,8 +125,24 @@
     font-size: 14px; 
 }
 
-.common-button:hover {
-    background: linear-gradient(to left, #007bff, #9b59b6);
+.link-button {
+    background: linear-gradient(45deg, #ff8000, #ff5733);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    /* 设置固定宽度和高度以确保一致性 */
+    width: 80px;
+    /* 设置按钮固定宽度 */
+    height: 40px;
+    /* 设置按钮固定高度 */
+    font-size: 14px; 
+}
+
+.link-button:hover {
+    background:  linear-gradient(225deg, #ffa200, #ff8750);
     transform: scale(1.05);
 }
 
@@ -141,7 +156,8 @@
 
 .download-button,
 .delete-button, 
-.common-button {
+.code-button,
+.link-button {
     margin-top: 10px;
     margin-left: 10px;
     /* 按钮之间的间隔 */

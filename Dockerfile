@@ -1,7 +1,6 @@
 FROM python:3.10-slim
 
 COPY . /app
-COPY ./config /container/config
 COPY ./wallpaper /container/wallpaper
 
 
@@ -12,6 +11,7 @@ WORKDIR /app
 RUN mkdir -p /app/buffer
 RUN mkdir -p /app/share
 RUN mkdir -p /app/data
+RUN mkdir -p /app/config
 
 RUN pip install -r requirements.txt
 EXPOSE 80

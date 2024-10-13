@@ -27,7 +27,7 @@ body {
 }
 
 .button {
-    background: linear-gradient(to right, #009a7b, #80b335);
+    background: linear-gradient(45deg, #3da342, #53c258);
     color: white;
     border: none;
     padding: 8px 10px;
@@ -43,12 +43,12 @@ body {
 }
 
 .button:hover {
-    background: linear-gradient(to left, #009a7b, #80b335);
+    background: linear-gradient(135deg, #4CAF50, #81C784); /* 绿色渐变背景 */
     transform: scale(1.05);
 }
 
 .buttonlogout {
-    background: linear-gradient(to right, #ff3333, #b82a07); /* 设置红色渐变背景色 */
+    background: linear-gradient(45deg, #ff3333, #b82a07); /* 设置红色渐变背景色 */
     color: white;
     border: none;
     padding: 5px 5px;
@@ -65,7 +65,7 @@ body {
 
 
 .buttonlogout:hover {
-    background: linear-gradient(to left, #ff3333, #b82a07); /* 设置红色渐变背景色 */
+    background: linear-gradient(225deg, #ff3333, #b82a07); /* 设置红色渐变背景色 */
     transform: scale(1.05);
 }
 

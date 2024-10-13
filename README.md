@@ -3,13 +3,12 @@
      <h1 style="display: inline; background: linear-gradient(45deg, #007bff, #00aaff, #b700ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
         MIMISHARE
     </h1>
-    <h2 style="display: inline; vertical-align: middle;">部署在NAS上的轻量文件分享软件</h2>
+    <h2 style="display: inline; vertical-align: middle;">部署在NAS上的轻量卡片式文件分享软件</h2>
 </div>
 
 
 ## 界面预览
-![demo1](mdpic/pic1.jpg)
-![demo2](mdpic/pic2.jpg)
+![demo1](mdpic/demo.png)
 
 ## 使用说明
 

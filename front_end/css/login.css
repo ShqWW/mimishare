@@ -11,7 +11,7 @@
 }
 
 .button {
-    background: linear-gradient(to right, #007bff, #9b59b6);
+    background: linear-gradient(45deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);
     color: white;
     border: none;
     padding: 10px 15px;
@@ -26,6 +26,8 @@
 }
 
 .button:hover {
-    background: linear-gradient(to right, #0056b3, #6c358f);
+    background: linear-gradient(225deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);
+    color: white;
     transform: scale(1.05);
 }
+

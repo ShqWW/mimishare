@@ -1,9 +1,9 @@
 from .variable import *
-from .utils import get_config_json, get_current_user
+from .utils import read_config_dict, write_config_dict, get_current_user
 from fastapi import Request, Form, HTTPException
 from fastapi.responses import RedirectResponse
-import json
-from aiofiles import open as aio_open
+
+
 
 
 def login_page(request: Request):
@@ -11,7 +11,7 @@ def login_page(request: Request):
 
 
 def login(request: Request, password: str = Form(...)):
-    json_file = get_config_json()
+    json_file = read_config_dict()
     password_true = json_file["password"]
     if password != password_true:
         return templates.TemplateResponse("login.html", {"request": request, "error": "Password Error!"})
@@ -34,12 +34,11 @@ async def set_page(request: Request):
         user = get_current_user(token)  # 验证令牌
     except HTTPException:
         return RedirectResponse(url="/login", status_code=303)
-    config_dict = get_config_json()
+    config_dict = read_config_dict()
     return templates.TemplateResponse("dashboard.html", {"request": request, "json_data": config_dict})
 
 
-async def update_config(filesize: int = Form(...), chunksize: int = Form(...), password: str = Form(...)):
-    data = {"filesize": filesize, "chunksize": chunksize, "password": password}
-    async with aio_open(CONFIGJSONPATH, mode='w') as file:
-        await file.write(json.dumps(data))
+async def update_config(filesize: int = Form(...), chunksize: int = Form(...), buffertime: int = Form(...), password: str = Form(...)):
+    data = {"filesize": filesize, "chunksize": chunksize, "buffertime":buffertime, "password": password}
+    write_config_dict(data)
     return {"message": "JSON file updated successfully"}

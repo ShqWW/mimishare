@@ -1,146 +1,7 @@
-.frosted-box {
-    /* width: 80%; */
-    max-width: 380px;
-    min-width: 380px;
-    text-align: center;
-    /* margin: auto; */
-    margin-top: 3%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-h2 {
-    color: #fff;
-}
-
-p {
-    color: #fff;
-    font-size: 18px;
-}
-
-.file-uploader p {
-    margin: 0;
-    color: #fff;
-    font-size: 16px;
-}
-
-.file-uploader {
-    width: 80%;
-    height: 100px;
-    border: 1.5px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    padding: 10px;
-    margin: 10px auto;
-    position: relative;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.file-uploader:hover {
-    border: 1.5px solid #9b59b6;
-    background: linear-gradient(45deg, rgba(91, 47, 141, 0.5), rgba(74, 144, 226, 0.5));
-    /* 悬停时的蓝紫渐变效果，略透明 */
-}
-
-.file-uploader input[type="file"] {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
-
-button {
-    background: linear-gradient(to right, #007bff, #9b59b6);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 5px 0;
-    width: 120px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background: linear-gradient(to left, #007bff, #9b59b6);
-    transform: scale(1.05);
-}
-
-.progress-container {
-    width: 80%;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-    margin: 10px auto;
-}
-
-.progress-bar {
-    height: 5px;
-    width: 0%;
-    background: linear-gradient(to right, #007bff, #9b59b6);
-    border-radius: 5px;
-    transition: width 0.3s;
-}
-
-.gradient-text {
-    background: linear-gradient(to right, #007bff, #9b59b6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 18px;
-}
-
-.result-container {
-    display: none;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-    width: 75%;
-}
-
-.left-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* margin-right: auto; */
-}
-
-.right-section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-}
-
-.message-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#qrCanvas {
-    overflow: hidden;
-    background-color: transparent;
-    width:93%;
-    height:93%;
-}
-
-/* .result {
-    margin-left: -14%;
-    display:none;
-} */
-
-
 body {
     justify-content: flex-start;
     margin-top: 30px;
+    gap: 10px;
 }
 
 /* 设置下拉框的样式 */
@@ -157,60 +18,18 @@ select {
     /* 可选: 圆角 */
 }
 
-/* 设置下拉菜单选项的样式 */
-select option {
-    background-color: black;
-    /* 设置选项背景为黑色 */
-    color: white;
-    /* 设置选项文字为白色 */
-}
-
-/* 设置标签的样式 */
-label {
-    color: white;
-    /* 设置标签文字为白色 */
-    font-size: 16px;
-    /* 可选: 设置字体大小 */
-    margin-right: 10px;
-    /* 可选: 标签和下拉框之间的间距 */
-}
 
 
-/* 使用 flex 布局使标签和下拉框水平排列 */
-.select-container {
+
+.select-container-parent {
     display: flex;
-    float: left;
+    flex-direction: column;
+    justify-content: center; 
     align-items: center;
-    /* 垂直居中对齐 */
-    margin-bottom: 10px;
     text-align: left;
-    /* 确保内容左对齐 */
+    margin-bottom: 5%;
 }
 
-.select-container label {
-    display: block;
-    /* 使label占据一行 */
-    margin-bottom: 5px;
-    /* 标签与选择框之间间距 */
-}
-
-.select-container select {
-    width: 100%;
-    /* 使选择框宽度填满容器 */
-    max-width: 200px;
-    /* 设置选择框的最大宽度 */
-    min-width: 200px;
-    /* 设置选择框的最小宽度 */
-    padding: 5px;
-    /* 添加内边距 */
-    box-sizing: border-box;
-    /* 确保内边距不影响总宽度 */
-    white-space: nowrap;
-    /* 防止选择框内容换行 */
-    overflow: hidden;
-    /* 溢出文本隐藏 */
-    text-overflow: ellipsis;
-    /* 溢出的文本用省略号表示 */
-    border-radius: 8px;
-    border: 1px solid #cccccca9;
+.select-container-parent select{
+    width: 150px;
 }

@@ -16,8 +16,19 @@
             justify-content: flex-start;
             margin-top: 30px;
         }
+
         .file-name {
             max-width: 250px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            /* 增大图标与文字间距 */
+            font-size: 16px;
+        }
+
+        .file-name i {
+            font-size: 24px;
+            /* 增大图标字体 */
         }
     </style>
 </head>
@@ -26,7 +37,8 @@
     <div class="nav-container">
         <a href="admin">后台设置</a>
         <a href="servershare">云端分享</a>
-        <a href="filemanage" style="background: linear-gradient(to right, #007bff, #9b59b6);">文件管理</a>
+        <a href="filemanage"
+            style="background: linear-gradient(45deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);">文件管理</a>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -35,8 +47,11 @@
         {% for code, file_info in files_with_codes.items() %}
         {% with file_name=file_info.0, expiration=file_info.1 %}
         <div class="frosted-box">
-            <span class="file-name">{{ file_name }}</span>
-            <span>过期时间:{{ expiration }}</span>
+            <span class="file-name" data-file="{{ file_name }}" style="font-size: 18px;" title="{{ file_name }}">
+                {{ file_name }}
+            </span>
+            <span style="font-size: 13px;"><i class="fa-regular fa-clock"
+                    style="color: #B197FC; margin-right:5px;"></i>过期时间: {{ expiration }}</span>
             <!-- <span class="file-name">取件码: {{ code }}</span> -->
             <div class="container-row">
                 <div class="left-section">
@@ -44,9 +59,11 @@
                 </div>
                 <div class="btn-section">
                     <div class="column-section">
-                        <button class="common-button" onclick="copyCode('{{ code }}')" style="font-size: 19px"  title="复制取件码">{{ code }}</button>
+                        <button class="code-button" onclick="copyCode('{{ code }}')" style="font-size: 19px"
+                            title="点击复制">{{ code }}</button>
                         <a href="/download/{{code}}" class="download-link">
-                            <button class="common-button" onclick="copyLink(event, this)" style="font-size: 19px"  title="复制链接">
+                            <button class="link-button" onclick="copyLink(event, this)" style="font-size: 19px"
+                                title="复制链接">
                                 <i class="fa-solid fa-link"></i></button>
                         </a>
                     </div>
@@ -67,5 +84,8 @@
     <script src="/js/filemanage.js"></script>
 
 </body>
+
+<script src="js/filetype.js"></script>
+<script src="js/filetype_dom.js"></script>
 
 </html>

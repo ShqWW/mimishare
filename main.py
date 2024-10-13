@@ -10,7 +10,7 @@ from back_end.download import download_page, download_file, fetch_file
 from back_end.file_manage import list_files, delete_files
 from back_end.upload import upload_page, upload_chunk, merge_chunk, generate_code, server_share_page, server_share
 from back_end.admin import login_page, login, logout, set_page, update_config
-from back_end.utils import clear_buffer, set_interval
+from back_end.utils import clear_buffer, clear_outdate, set_interval, initialize_db
 
 os.makedirs(UPLOADPATH, exist_ok=True)
 os.makedirs(BUFFERPATH, exist_ok=True)
@@ -49,6 +49,8 @@ app.post("/admin")(update_config)
 
 # 运行应用
 if __name__ == "__main__":
+    initialize_db()
+    interval_timer = set_interval(clear_outdate, 7200)
     interval_timer = set_interval(clear_buffer, 3600)
     uvicorn.run(app, host="0.0.0.0", port=80)
     

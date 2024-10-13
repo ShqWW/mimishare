@@ -8,21 +8,48 @@
     <title>后台管理</title>
     <link rel="stylesheet" href="css/body.css">
     <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/upload.css">
+    <link rel="stylesheet" href="css/filename.css">
     <link rel="stylesheet" href="css/servershare.css">
-    <link rel="stylesheet" href="css/textlink.css">
+    <!-- <link rel="stylesheet" href="css/textlink.css"> -->
     <style>
+        /* 设置下拉框的样式 */
+        select {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 1px solid white;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        /* 设置下拉菜单选项的样式 */
+        select option {
+            background-color: black;
+            /* 设置选项背景为黑色 */
+            color: white;
+            /* 设置选项文字为白色 */
+        }
+
+        /* 设置标签的样式 */
+        label {
+            color: white;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
         .file-name {
             max-width: 300px;
-            font-size: 18px;
-            font-weight: bold;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            display: block;
-            /* 作为块级元素 */
-            margin: 0 auto;
-            /* 使其居中对齐 */
-            margin-bottom: 20px;
+            /* 设置选择框的最大宽度 */
+            min-width: 300px;
+            min-height: 30px;
+            font-size: 24px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            /* 设置选择框的最小宽度 */
+        }
+        .frosted-box{
+            padding: 10px;
         }
     </style>
 </head>
@@ -30,54 +57,76 @@
 <body>
     <div class="nav-container">
         <a href="admin">后台设置</a>
-        <a href="servershare" style="background: linear-gradient(to right, #007bff, #9b59b6);">云端分享</a>
+        <a href="servershare"
+            style="background: linear-gradient(45deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);">云端分享</a>
         <a href="filemanage">文件管理</a>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <div class="frosted-box">
-        <h2>云端文件分享</h2>
-        <p id="fileInfo" , class="file-name">文件提前放在云端的share文件夹中</p>
-        <div class="select-container">
-            <label for="filename">选择文件:</label>
-            <select id="filename" name="filename">
-                <option value="" disabled selected>请选择文件</option> <!-- 添加默认提示选项 -->
-                {% for option in options %}
-                <option value="{{ option.value }}">{{ option.label }}</option>
-                {% endfor %}
-            </select>
+        <h2>云端文件分享 (share目录)</h2>
+
+        <div class="select-container-parent" style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; align-items: center;">
+                <label for="filename" style="text-align: right; display: inline-block; width: 100px;">选择文件:</label>
+                <select id="filename" name="filename" style="flex: 1; margin-left: 10px;">
+                    <option value="" disabled selected>请选择文件</option> <!-- 添加默认提示选项 -->
+                    {% for option in options %}
+                    <option value="{{ option.value }}">{{ option.label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div style="display: flex; align-items: center;">
+                <label for="expiration" style="text-align: right; display: inline-block; width: 100px;">过期时间:</label>
+                <select id="expiration" name="expiration" style="flex: 1; margin-left: 10px;">
+                    <option value="60">一分钟</option>
+                    <option value="3600">一小时</option>
+                    <option value="86400" selected>一天</option>
+                    <option value="2592000">一个月</option>
+                    <option value="0">永久</option>
+                </select>
+            </div>
         </div>
-        <div class="select-container">
-            <label for="expiration">过期时间:</label>
-            <select id="expiration" name="expiration">
-                <option value="60">一分钟</option>
-                <option value="3600">一小时</option>
-                <option value="86400" selected>一天</option>
-                <option value="2592000">一个月</option>
-                <option value="0">永久</option>
-            </select>
+
+
+        <div style="margin-bottom: 10px;">  <!-- 这里设置间距 -->
+            <button id="uploadButton" style="font-size: 15px;" class="theme-button" title="寄出">
+                <i class="fa-regular fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;确认投喂
+            </button>
         </div>
+    </div>
 
-
-
-        <button id="uploadButton">分享文件</button>
-
+    <div class="frosted-box .send-container" id="share-container" style="display:none">
+        <div class="msg-box" , style="margin-bottom: 5px">
+            <label id="filetitle-share" , class="file-name">unknown</label>
+        </div>
+        <div class="msg-box-info" style="margin-bottom: 10px;">
+            <label id="filesize" style="margin-bottom: 5px;">unknown</label>
+            <label id="deadline" style="margin-bottom: 5px;">unknown</label>
+        </div>
         <div class="result-container">
             <div class="left-section">
                 <canvas id="qrCanvas"></canvas> <!-- 设置画布大小 -->
             </div>
             <div class="right-section">
-                <button id="pickupCodeButton" code="" onclick="copyCode(this)" style="font-size: 18px"
-                    title="复制取件码">0000</button>
-                <a id="pickupLink" href="/" download>
-                    <button id="copyLinkButton" onclick="copyLink(event, this)" style="font-size: 18px" title="复制链接"><i
-                            class="fa-solid fa-link"></i></button>
-                </a>
+                <div class="button-container">
+                    <div class="btn-label">取件码:</div>
+                    <button id="pickupCodeButton" code='' onclick="copyCode(this)" class="code-button" title="单击复制"
+                        style="font-size: 19px">0000</button>
+                </div>
+                <div class="button-container">
+                    <div class="btn-label">下载链接:</div>
+                    <a id="pickupLink" href="/" download>
+                        <button id="copyLinkButton" onclick="copyLink(event, this)" title="复制链接" class="link-button"><i
+                                class="fa-solid fa-link"></i></button>
+                    </a>
+                </div>
             </div>
+
         </div>
     </div>
-
+    <script src="js/filetype.js"></script>
     <script src="js/servershare.js"></script>
 
 

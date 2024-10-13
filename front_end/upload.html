@@ -34,7 +34,6 @@
             color: white;
             /* 设置选项文字为白色 */
         }
-
         /* 设置标签的样式 */
         label {
             color: white;
@@ -42,11 +41,15 @@
             margin-right: 10px;
         }
 
-        /* 使用 flex 布局使标签和下拉框水平排列 */
-        .select-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .file-name {
+            max-width: 300px;
+            /* 设置选择框的最大宽度 */
+            min-width: 300px;
+            min-height: 30px;
+            font-size: 24px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            /* 设置选择框的最小宽度 */
         }
     </style>
     <script>
@@ -57,30 +60,24 @@
 
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <!-- <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> -->
     <div class="frosted-box">
         <div class="header">
-            <img src="/icon/logo.svg" class="logo" alt="Logo"/>
+            <img src="/icon/logo.svg" class="logo" alt="Logo" />
             <h2 class="colorful-text">MIMISHARE</h2>
         </div>
-        <p id="fileInfo" , class="file-name">先选过期时间再上传</p>
-        <div class="select-container">
-            <label for="expiration" style="font-size: 24px"><i class="fa-regular fa-clock" style="color: #B197FC;"></i></label>
-            <select id="expiration" name="expiration">
-                <option value="60">一分钟</option>
-                <option value="3600">一小时</option>
-                <option value="86400" selected>一天</option>
-                <option value="2592000">一个月</option>
-                <option value="0">永久</option>
-            </select>
-        </div>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+        
 
         <div class="file-uploader" id="fileUploader">
             <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 32 32">
                 <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#007bff" />
-                        <stop offset="100%" stop-color="#9b59b6" />
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#4161eb" />
+                        <stop offset="25%" stop-color="#6b58e6" />
+                        <stop offset="50%" stop-color="#9650db" />
+                        <stop offset="75%" stop-color="#b1458f" />
+                        <stop offset="100%" stop-color="#ff579a" />
                     </linearGradient>
                 </defs>
                 <path fill="none" stroke="url(#gradient)" stroke-linecap="round" stroke-linejoin="round"
@@ -95,22 +92,62 @@
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
-        <div class="result-container">
-                <div class="left-section">
-                    <canvas id="qrCanvas"></canvas> <!-- 设置画布大小 -->
-                </div>
-                <div class="right-section">
-                    <button id="pickupCodeButton" code='' onclick="copyCode(this)" style="font-size: 18px" title="复制取件码" style="font-size: 19px">0000</button>
-                    <a id="pickupLink" href="/" download>
-                        <button id="copyLinkButton" onclick="copyLink(event, this)" style="font-size: 19px" title="复制链接"><i
-                                class="fa-solid fa-link"></i></button>
-                    </a>
-                </div>
-        </div>
 
         <a href="/" class="text-link" title="下载文件">下载文件？点击这里</a>
 
-        <script src="js/upload.js"></script>
+
+    </div>
+    <div class="frosted-box .send-container" id="send-container" style="display: none">
+        <div class="msg-box", style="margin-bottom: 5px">
+            <label id="filetitle-send" , class="file-name">unknown</label>
+        </div>
+        <div class="select-container" id="select-container">
+            <label for="expiration" style="font-size: 18px; margin-bottom: 5px;" ;><i class="fa-regular fa-clock" style="color: #B197FC; font-size: 20px; margin-top:5%"></i> 保质期:</label>
+            <select id="expiration" name="expiration" style="margin-right:30px">
+                <option value="60">一分钟</option>
+                <option value="3600">一小时</option>
+                <option value="86400" selected>一天</option>
+                <option value="2592000">一个月</option>
+                <option value="0">永久</option>
+            </select>
+            <button id="uploadButton" style="font-size: 16px" class="theme-button" title="寄出">
+                <i class="fa-regular fa-paper-plane"></i>&nbsp;&nbsp;&nbsp;确认投喂
+            </button>
+        </div>
+    </div>
+
+    <div class="frosted-box .send-container" id="share-container" style="display: none">
+        <div class="msg-box", style="margin-bottom: 5px">
+            <label id="filetitle-share" , class="file-name">unknown</label>
+        </div>
+        <div class="msg-box-info" style="margin-bottom: 10px;">
+            <label id="filesize" style="margin-bottom: 5px;">unknown</label>
+            <label id="deadline" style="margin-bottom: 5px;">unknown</label>
+        </div>
+        <div class="result-container">
+            <div class="left-section">
+                <canvas id="qrCanvas"></canvas> <!-- 设置画布大小 -->
+            </div>
+            <div class="right-section">
+                <div class="button-container">
+                    <div class="btn-label">取件码:</div>
+                    <button id="pickupCodeButton" code='' onclick="copyCode(this)" class="code-button" title="单击复制"
+                        style="font-size: 19px">0000</button>
+                </div>
+                <div class="button-container">
+                    <div class="btn-label">下载链接:</div>
+                    <a id="pickupLink" href="/" download>
+                        <button id="copyLinkButton" onclick="copyLink(event, this)" title="复制链接" class="link-button"><i
+                                class="fa-solid fa-link"></i></button>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/filetype.js"></script>
+    <script src="js/upload.js"></script>
 
 
 </body>

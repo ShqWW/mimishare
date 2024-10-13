@@ -6,7 +6,7 @@ document.getElementById('pickupCode').addEventListener('keydown', function (even
         document.querySelector('.input-container button').click(); // 触发下载文件按钮的点击事件
     }
 });
-
+document.getElementById('fetch-result').style.display='none';
 
 async function fetchFile() {
     const pickupCode = document.getElementById('pickupCode').value;
@@ -26,10 +26,12 @@ async function fetchFile() {
     const fileInfo = await response.json();
 
 
-    document.querySelector('.file-section').style.display = 'block';
+    document.getElementById('fetch-result').style.display='block';
 
-    document.getElementById('file-name').innerText = `文件名称: ${fileInfo.filename}`;
-    document.getElementById('file-size').innerText = `文件大小: ${fileInfo.filesize}`;
+    // document.getElementById('file-name').innerText = `文件名称: ${fileInfo.filename}`;
+    setFileInfo(fileInfo.name)
+    // document.getElementById('file-size').innerText = `文件大小: ${fileInfo.filesize}`;
+    document.getElementById('file-size').innerHTML = `<i class="fa-solid fa-hard-drive" style="color: #66a8ff; font-size: 18px; margin-right:5px;"></i> 文件大小: ${fileInfo.filesize}`;
     document.getElementById('pickupLink').href = `/download/${pickupCode}`;
     
 }

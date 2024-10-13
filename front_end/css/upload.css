@@ -26,7 +26,7 @@ p {
     width: 80%;
     height: 100px;
     border: 1.5px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -35,14 +35,18 @@ p {
     padding: 10px;
     margin: 10px auto;
     position: relative;
-    background-color: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4)
 }
+
+
 
 .file-uploader:hover {
     border: 1.5px solid #9b59b6;
     background: linear-gradient(45deg, rgba(91, 47, 141, 0.5), rgba(74, 144, 226, 0.5));
     /* 悬停时的蓝紫渐变效果，略透明 */
 }
+
+
 
 .file-uploader input[type="file"] {
     position: absolute;
@@ -52,21 +56,63 @@ p {
     cursor: pointer;
 }
 
-button {
-    background: linear-gradient(to right, #007bff, #9b59b6);
+.gradient-text {
+    background: linear-gradient(45deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 18px;
+}
+
+
+
+.theme-button {
+    background: linear-gradient(45deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 5px 3px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 120px;
+    transition: background-color 0.3s;
+    font-size: 19px;
+}
+
+.theme-button:hover {
+    background: linear-gradient(225deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);
+    transform: scale(1.05);
+}
+
+
+.link-button {
+    background: linear-gradient(to right, #ff8000, #ff5733);
+    color: white;
+    border: none;
+    padding: 5px 3px;
     border-radius: 5px;
     cursor: pointer;
     margin: 5px 0;
-    width: 120px;
+    width: 80px;
     transition: background-color 0.3s;
+    font-size: 19px;
 }
 
-button:hover {
-    background: linear-gradient(to left, #007bff, #9b59b6);
+.link-button:hover {
+    background: linear-gradient(to right, #ffa200, #ff8750);
     transform: scale(1.05);
+}
+
+
+
+.code-button {
+    background:  rgba(128, 128, 128, 0.4);
+
+    color: white;
+    border: none;
+    padding: 5px 3px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px 0;
+    width: 80px;
 }
 
 .progress-container {
@@ -79,40 +125,59 @@ button:hover {
 .progress-bar {
     height: 5px;
     width: 0%;
-    background: linear-gradient(to right, #007bff, #9b59b6);
+    background: linear-gradient(45deg, #4161eb, #6b58e6, #9650db, #b1458f, #ff579a);
     border-radius: 5px;
     transition: width 0.3s;
 }
 
-.gradient-text {
-    background: linear-gradient(to right, #007bff, #9b59b6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-size: 18px;
+
+
+ /* 使用 flex 布局使标签和下拉框水平排列 */
+ .select-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
 }
 
 .result-container {
-    display: none;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
-    width: 88%;
+    width: 75%;
 }
 
-.left-section {
+
+.button-container {
     display: flex;
-    justify-content: center;
+    /* flex-direction: row; */
     align-items: center;
-    margin-right: auto;
+    margin-bottom: 10px; /* 调整间距 */
+}
+
+.btn-label {
+    text-align: right; /* 让标题文字右对齐 */
+    margin-right: 20px; /* 调整标题和按钮之间的间距 */
+    font-size: 16px; /* 调整标题的字体大小 */
+    flex-grow: 1; /* 让标题占据剩余空间，从而实现右对齐效果 */
 }
 
 .right-section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
+    justify-content: space-between;
+    /* align-items: center; */
+    text-align: right;
+}
+
+
+.left-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom:2%;
 }
 
 #qrCanvas {
@@ -126,4 +191,20 @@ button:hover {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.msg-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.msg-box-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 修改为 flex-start，使内容靠上对齐 */
+    /* align-items: center; */
+    text-align: left;
+    margin-left: 20%;
 }

@@ -5,6 +5,15 @@ const selectTime = document.getElementById('expiration');
 const selectFile = document.getElementById('filename');
 let result;
 let code;
+let name_record = null;
+
+var qr = new QRious({
+    element: document.getElementById('qrCanvas'),
+    value: "afsdfasfsfgesgsdfgsfdgsgsgsgsgsggsgsg", // 在这里放入取件码
+    foreground: 'white', // 设置前景颜色为白色
+    background: 'transparent',
+    size: 100
+});
 
 function copyCode(button) {
     const tempInput = document.createElement('input');
@@ -29,32 +38,44 @@ function copyLink(event, button) {
 }
 
 async function autoUpload() {
+    const filename = selectFile.value
+    if (filename==name_record)
+    {
+        alert('不要重复提交！');
+        return;
+    }
     const response = await fetch('/servershareaction/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename: selectFile.value, expiration: selectTime.value })
+        body: JSON.stringify({filename: filename, expiration: selectTime.value})
     });
 
     if (!response.ok) {
         alert('请求失败: ' + response.statusText);
         throw new Error('网络响应失败');
-    } else {
+    } 
+    else {
         const data = await response.json();
-        code = data.code;
-        console.log(code);
-        document.getElementById('fileInfo').textContent = '已上传文件名：' + selectFile.value;
-        document.querySelector('.result-container').style.display = 'flex';
+        const code = data.code;
+        const deadline = data.deadline;
+        const filesize = data.filesize;
+        name_record = filename;
+
+        setFileInfo(filename);
+        document.getElementById('share-container').style.display='block';
+        document.getElementById('filesize').innerHTML = `<i class="fa-solid fa-hard-drive" style="color: #66a8ff; margin-right:5px;"></i> 文件大小: ${filesize}`;
+        document.getElementById('deadline').innerHTML = `<i class="fa-regular fa-clock" style="color: #B197FC; margin-right:5px;"></i> 过期时间: ${deadline}`; 
         pickupCodeButton.innerText = code;
         pickupCodeButton.code = code;
+        pickupCodeButton.href = code;
         pickupLinkElement.href = 'download/' + code; // 更新为新的取件链接
 
         // 生成二维码
         var qr = new QRious({
             element: document.getElementById('qrCanvas'),
-            value: pickupLinkElement.href,
-            foreground: 'white',
-            background: 'transparent',
-            size: 100 // 设置二维码的大小
+            value: pickupLinkElement.href, // 在这里放入取件码
+            foreground: 'white', // 设置前景颜色为白色
+            background: 'transparent'
         });
     }
 }
