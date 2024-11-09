@@ -8,13 +8,12 @@ import shutil
 
 
 async def upload_page(request: Request):
-    config_dict = read_config_dict()
-    return templates.TemplateResponse("upload.html", {"request": request, "filesize_limit": config_dict['filesize'], "chunksize_limit": config_dict['chunksize']})
+    return templates.TemplateResponse("upload.html", {"request": request, "filesize_limit": read_config_dict('filesize'), "chunksize_limit": read_config_dict('chunksize')})
 
 async def generate_code(request: Request):
     request_data = await request.json()
     code = generate_unique_code()
-    add_record_by_code(code, request_data.get("filename", "unknown"), calculate_expiration_time(int(read_config_dict()["buffertime"])), True)
+    add_record_by_code(code, request_data.get("filename", "unknown"), calculate_expiration_time(int(read_config_dict("buffertime"))), True)
     return JSONResponse(content={"code": code})
 
 async def upload_chunk(file: UploadFile = File(...), code: str = Form(...), index: int = Form(...), total_chunks: int = Form(...)):

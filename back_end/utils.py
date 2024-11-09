@@ -13,8 +13,8 @@ import os
 
 CREATE_CONFIG_TABLE_SQL = '''
 CREATE TABLE IF NOT EXISTS config (
-    config_dict VARCHAR(6) PRIMARY KEY,
-    value TEXT
+    KEY TEXT PRIMARY KEY,
+    VALUE TEXT
 );
 '''
 
@@ -27,35 +27,42 @@ CREATE TABLE IF NOT EXISTS upload (
 );
 '''
 
+
+
 def initialize_db():
     if not os.path.exists(DBPATH):
         with sqlite3.connect(DBPATH) as conn:
             cursor = conn.cursor()
             cursor.execute(CREATE_CONFIG_TABLE_SQL)
             cursor.execute(CREATE_UPLOAD_TABLE_SQL)
-            cursor.execute("INSERT OR REPLACE INTO config (config_dict, value) VALUES (?,?)", ("config", json.dumps(initial_config)))
+            for key, value in initial_config.items():
+                cursor.execute("INSERT OR REPLACE INTO config (KEY, VALUE) VALUES (?, ?)", (key, value))
             conn.commit()
-    
-    config = read_config_dict()
-    missing_keys = {key: initial_config[key] for key in initial_config if key not in config}
-    if missing_keys:
-        write_config_dict({**config, **missing_keys})
 
-def read_config_dict():
+def list_config_dict():
+    config_dict = {}
     with sqlite3.connect(DBPATH) as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT value FROM config WHERE config_dict = \'config\';")
-        result = cursor.fetchone()
-        if result:
-            return json.loads(result[0])
-        return {}
+        cursor.execute("SELECT KEY, VALUE FROM config")
+        results = cursor.fetchall()
+        for key, value in results:
+            config_dict[key] = value
+    return config_dict
 
-def write_config_dict(dict_data):
-    """将配置字典写入数据库"""
-    initialize_db()
+def read_config_dict(key=None):
     with sqlite3.connect(DBPATH) as conn:
         cursor = conn.cursor()
-        cursor.execute("UPDATE config SET value = ? WHERE config_dict = ?", (json.dumps(dict_data), "config"))
+        if key is None:
+            return None
+        else:
+            cursor.execute("SELECT VALUE FROM config WHERE KEY = ?", (key,))
+            result = cursor.fetchone()
+            return result[0] if result else None
+
+def write_config_dict(key, value):
+    with sqlite3.connect(DBPATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT OR REPLACE INTO config (KEY, VALUE) VALUES (?, ?)", (key, value))
         conn.commit()
 
 def read_upload_dict():
